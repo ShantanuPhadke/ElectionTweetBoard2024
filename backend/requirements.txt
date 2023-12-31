@@ -35,7 +35,7 @@ soupsieve==2.5
 SQLAlchemy==2.0.23
 sympy==1.12
 tokenizers==0.15.0
-torch==2.1.2
+torch==1.5.0+cpu
 tqdm==4.66.1
 transformers==4.36.2
 typing_extensions==4.9.0
