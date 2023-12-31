@@ -1,0 +1,105 @@
+.dashboardPageButtonLocker {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    display: block;
+}
+.defaultDashboardContainer{
+    position: absolute;
+    top: 45px;
+    left:0px;
+    right: 0px;
+    bottom: 45px;
+    background-color: #004770;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-y:scroll;
+}
+
+.republicanDashboardContainer{
+    position:absolute;
+    top:45px;
+    left:0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #700000;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-y:scroll; 
+}
+
+.defaultDashboardCardContainer{
+    margin: 5%;
+    justify-content: center;
+}
+
+.dropdownLocker{
+    position: absolute;
+    height:45px;
+    bottom:0%;
+    width: 100%;
+    background-color: black;
+}
+
+/* Takes out the blue outline from buttons after they are clicked */
+button:focus {outline:0;}
+
+.modalOpened{
+    position: fixed;
+    height: 100px;
+    width: 100px;
+    border-radius: 20px;
+    background-color: #17141d;
+    z-index:999;
+}
+
+.modalClosed{
+    display: none;
+}
+
+.black-out{
+    position:absolute;
+    top:0px;
+    left:0px;
+    right: 0px;
+    bottom: 0px;
+    width:100%;
+    height:100%;
+    background-color: black;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-y:scroll;
+}
+
+.invisible{
+    display: none;
+}
+
+.buttonDisabled{
+    pointer-events: none;
+    display: none;
+}
+
+/* Specifically for the iPhones 6/7/8 Plus since they seem to be messing up */
+@media only screen and (min-width: 414px) and (max-width: 414px) {
+    .defaultDashboardContainer{
+        position:absolute;
+        width: 414px;
+        height: 100%;
+        top:45px;
+        left:0px;
+        right: 0px;
+        bottom: 0px;
+        background-color: #004770;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow-y:scroll;
+        align-items: center;
+    }
+}

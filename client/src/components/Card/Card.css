@@ -1,0 +1,276 @@
+.tooltiptext {
+    width: 120px;
+    background-color: white;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /*position: absolute;*/
+    z-index: 999;
+    /*bottom: 125%;*/
+    left: 5%;
+    /*margin-left: -60px;*/
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .card {
+      display: flex;
+      height: 380px;
+      width: 300px;
+      background-color: #17141d;
+      border-radius: 10px;
+      box-shadow: -1rem 0 3rem #000;
+      justify-content: center;
+    /*   margin-left: -50px; */
+      transition: 0.4s ease-out;
+      position: relative;
+      left: 0px;
+    }
+    
+    .card:not(:first-child) {
+        margin-left: -50px;
+    }
+    
+    .card:hover {
+      transform: translateY(-20px);
+      transition: 0.4s ease-out;
+    }
+    
+    .card:hover ~ .card {
+      position: relative;
+      left: 50px;
+      transition: 0.4s ease-out;
+    }
+    
+    .title {
+      color: white;
+      font-weight: 300;
+      position: absolute;
+      /*left: 5px;*/
+      height:20px;
+      top: 110px;
+      background-color:#2e3033; 
+    }
+    
+    .bar {
+      position: absolute;
+      top: 200px;
+      /*left: 20px;*/
+      height: 10px;
+      width: 150px;
+    }
+  
+    .droppedOutLabel{
+      position: absolute;
+      top: 185px;
+      /*left: 20px;*/
+      height: 10px;
+      width: 150px;
+    }
+    
+    .emptybar {
+      background-color: #2e3033;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .filledbar {
+      position: absolute;
+      top: 0px;
+      z-index: 3;
+      width: 0px;
+      height: 100%;
+      background: rgb(0,154,217);
+      /*background: linear-gradient(90deg, rgba(0,154,217,1) 0%, rgba(217,147,0,1) 65%, rgba(255,186,0,1) 100%);*/
+      transition: 0.6s ease-out;
+    }
+    
+    .card:hover .filledbar {
+      width: 150px;
+      transition: 0.4s ease-out;
+    }
+   
+    .circleLocker {
+      position: absolute;
+      top:10px;
+      justify-content: center;
+      display: flex;
+      flex-direction: row;
+      margin-top:75%;
+      width:100%;
+    }
+  
+    .circle {
+      display: block;
+      text-align: center;
+      line-height: 60px; 
+      margin-left:4%;
+      /*position: absolute;*/
+      font-weight: bold;
+      /*margin-top:75%;*/
+      /*margin-left: auto;*/
+      stroke-width: 2px;
+      height: 60px;
+      width: 60px;
+      /*text-anchor: middle;*/
+      color: #000000;
+      border-radius: 100%;
+    }
+    
+    .stroke {
+      stroke: blue;
+      stroke-width: 6;
+      stroke-dasharray: 360;
+      stroke-dashoffset: 360;
+      transition: 0.6s ease-out;
+      font-size:50px;
+      text-align: center;
+      color: black;
+      background-color: #2e3033;
+    }
+    
+    svg {
+      padding-top:20%;
+      fill: #ffffff;
+      
+    }
+    
+    .card:hover .stroke {
+      stroke-dashoffset: 10;
+      transition: 0.6s ease-out;
+    }
+  
+    .cardButtonLocker {
+        position: absolute;
+        top: 85%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+  
+    .hidden {
+      display: none;
+    }
+  
+  
+    /* iPhone 5/SE Configurations */
+    @media only screen and (max-width: 320px){
+      .card {
+        display: flex;
+        height: 380px;
+        width: 270px;
+        background-color: #17141d;
+        border-radius: 10px;
+        box-shadow: -1rem 0 3rem #000;
+        justify-content: center;
+      /*   margin-left: -50px; */
+        transition: 0.4s ease-out;
+        position: relative;
+        margin-left: -5%;
+        left: 0px;
+        align-self: center;
+      }
+  
+      .circleLocker {
+        position: absolute;
+        top:30px;
+        justify-content: center;
+        display: flex;
+        flex-direction: row;
+        margin-top:75%;
+        width:100%;
+      }
+  }
+  
+  /* Galaxy S5 Configurations */
+  @media only screen and (min-width: 321px) and (max-width: 374px) {
+    .card {
+      display: flex;
+      height: 380px;
+      width: 270px;
+      background-color: #17141d;
+      border-radius: 10px;
+      box-shadow: -1rem 0 3rem #000;
+      justify-content: center;
+    /*   margin-left: -50px; */
+      transition: 0.4s ease-out;
+      position: relative;
+      margin-left: -7%;
+      left: 0px;
+      align-self: center;
+    }
+  
+    .circleLocker {
+      position: absolute;
+      top:30px;
+      justify-content: center;
+      display: flex;
+      flex-direction: row;
+      margin-top:75%;
+      width:100%;
+    } 
+  }
+  
+  /* iPhone 6/7/8 Configurations */
+  @media only screen and (min-width: 375px) {
+      .card {
+        display: flex;
+        height: 380px;
+        width: 285px;
+        background-color: #17141d;
+        border-radius: 10px;
+        box-shadow: -1rem 0 3rem #000;
+        justify-content: center;
+      /*   margin-left: -50px; */
+        transition: 0.4s ease-out;
+        position: relative;
+        margin-left: -6%;
+        left: 0px;
+        align-self: center;
+      } 
+  }
+  
+  /* iPad Configurations */
+  @media only screen and (min-width: 768px) {
+    .card {
+      display: flex;
+      height: 380px;
+      width: 290px;
+      background-color: #17141d;
+      border-radius: 10px;
+      box-shadow: -1rem 0 3rem #000;
+      justify-content: center;
+    /*   margin-left: -50px; */
+      transition: 0.4s ease-out;
+      position: relative;
+      margin-left: -6%;
+      left: 0px;
+      align-self: center;
+    }
+    
+    .circleLocker {
+      position: absolute;
+      top:23px;
+      justify-content: center;
+      display: flex;
+      flex-direction: row;
+      margin-top:75%;
+      width:100%;
+    }
+  }
+  
+  
+  
+  /* iPad Pro Configurations */

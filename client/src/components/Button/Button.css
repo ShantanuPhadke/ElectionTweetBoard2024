@@ -1,0 +1,334 @@
+/* All Fork Dashboard Button Related CSS */
+.forkDashboardButton{
+    position:relative;
+    margin-left: 7%;
+    border: none;
+    color: black;
+    background-color: #35B798;
+    padding: 8px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.forkDashboardButton:hover{
+    color: #35B798;
+    font-weight: bold;
+    background-color:#000;
+}
+
+.forkDashboardButton:before,.forkDashboardButton:after{
+    content:'';
+    position: absolute;
+    top:0;
+    right:0;
+    height:5px;
+    width:0;
+    color: #000;
+    background: #35B798;
+    transition:400ms ease all;
+}
+
+.forkDashboardButton:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+.forkDashboardButton:hover:before,.forkDashboardButton:hover:after{
+    width:100%;
+    border-radius: 12px;
+    /*color: #35B798;
+    background: #000;*/
+    transition:800ms ease all;
+
+}
+
+/* All Default Dashboard Button Related CSS */
+.defaultDashboardButton{
+    position:relative;
+    margin-left: 7%;
+    border: none;
+    color: black;
+    background-color: #757472;
+    padding: 8px 30px;;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.defaultDashboardButton:hover{
+    color: #757472;
+    font-weight: bold;
+    background-color:#000;
+}
+
+.defaultDashboardButton:before,.defaultDashboardButton:after{
+    content:'';
+    position: absolute;
+    top:0;
+    right:0;
+    height:5px;
+    width:0;
+    color: #000;
+    background: #757472;
+    transition:400ms ease all;
+}
+
+.defaultDashboardButton:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+.defaultDashboardButton:hover:before,.defaultDashboardButton:hover:after{
+    width:100%;
+    border-radius: 12px;
+    transition:800ms ease all;
+
+}
+
+/* All custom dashboard button related CSS is below here */
+.customDashboardButton{
+    position:relative;
+    margin-left: 7%;
+    border: none;
+    color: black;
+    background-color: #2E9E97;
+    padding: 8px 30px;;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.customDashboardButton:hover{
+    color: #2E9E97;
+    font-weight: bold;
+    background-color:#000;
+}
+
+.customDashboardButton:before,.customDashboardButton:after{
+    content:'';
+    position: absolute;
+    top:0;
+    right:0;
+    height:5px;
+    width:0;
+    color: #000;
+    background: #2E9E97;
+    transition:400ms ease all;
+}
+
+.customDashboardButton:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+.customDashboardButton:hover:before,.customDashboardButton:hover:after{
+    width:100%;
+    border-radius: 12px;
+    transition:800ms ease all;
+}
+
+/* Democrats Button related css here */
+.democratsButton{
+    position:relative;
+    margin-left: 0%;
+    border: none;
+    color: black;
+    background-color: #005870;
+    padding: 8px 40px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.democratsButton:hover{
+    color: #005870;
+    font-weight: bold;
+    background-color:#000;
+}
+
+.democratsButton:before,.democratsButton:after{
+    content:'';
+    position: absolute;
+    top:0;
+    right:0;
+    height:5px;
+    width:0;
+    color: #000;
+    background: #005870;
+    transition:400ms ease all;
+}
+
+.democratsButton:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+.democratsButton:hover:before,.democratsButton:hover:after{
+    width:100%;
+    border-radius: 12px;
+    transition:800ms ease all;
+}
+
+/* Republicans Button related css here */
+.republicansButton{
+    position:relative;
+    margin-left: 5%;
+    border: none;
+    color: black;
+    background-color: #702F27;
+    padding: 8px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.republicansButton:hover{
+    color: #702F27;
+    font-weight: bold;
+    background-color:#000;
+}
+
+.republicansButton:before,.republicansButton:after{
+    content:'';
+    position: absolute;
+    top:0;
+    right:0;
+    height:5px;
+    width:0;
+    color: #000;
+    background: #702F27;
+    transition:400ms ease all;
+}
+
+.republicansButton:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+.republicansButton:hover:before,.republicansButton:hover:after{
+    width:100%;
+    border-radius: 12px;
+    transition:800ms ease all;
+}
+
+/* Tweet Info Button customization below here */
+.tweetInfoButton{
+    position:relative;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: none;
+    color: black;
+    background-color: #4A7273;
+    padding: 8px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.tweetInfoButton:hover{
+    color: #4A7273;
+    font-weight: bold;
+    background-color:#000;
+}
+
+.tweetInfoButton:before,.tweetInfoButton:after{
+    content:'';
+    position: absolute;
+    top:0;
+    right:0;
+    height:5px;
+    width:0;
+    color: #000;
+    background: #4A7273;
+    transition:400ms ease all;
+}
+
+.tweetInfoButton:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+.tweetInfoButton:hover:before,.tweetInfoButton:hover:after{
+    width:100%;
+    border-radius: 12px;
+    transition:800ms ease all;
+}
+
+/* Making the buttons smaller for Galaxy S5 and iPhone 5/SE Screens */
+@media only screen and (min-width: 320px) and (max-width: 760px){
+    .democratsButton{
+        position:relative;
+        margin-left: 0%;
+        border: none;
+        color: black;
+        background-color: #005870;
+        padding: 8px 30px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+    } 
+
+    .republicansButton{
+        position:relative;
+        margin-left: 5%;
+        border: none;
+        color: black;
+        background-color: #702F27;
+        padding: 8px 30px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+    }
+}

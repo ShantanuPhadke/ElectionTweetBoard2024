@@ -1,0 +1,931 @@
+.largeScreenLegend {
+    position: relative;
+    align-self:center;
+    background-color:#17141d;
+  }
+  
+  .largeScreenLegendInvisible {
+    display: none;
+  }
+  
+  @media only screen and (min-width: 1025px){
+   .close {
+        position: absolute;
+        right: 32px;
+        top: 32px;
+        width: 32px;
+        height: 32px;
+        opacity: 0.4;
+        color: #2fb586;
+        z-index: 999;
+      }
+      .close:hover {
+        opacity: 1;
+      }
+      .close:before, .close:after {
+        position: absolute;
+        left: 15px;
+        content: ' ';
+        height: 33px;
+        width: 2px;
+        background-color: #ffffff;
+      }
+      .close:before {
+        transform: rotate(45deg);
+      }
+      .close:after {
+        transform: rotate(-45deg);
+      }
+  
+      .tabButtonsLocker {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top: 20px;
+        left: 25%;
+        height: 7%;
+        width: 50%;
+        border:#2fb586;
+        border-style: solid;
+        border-width: 3px;
+        background-color: #17141d;
+        z-index: 999;
+      }
+  
+      .modalLocker{
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        margin-left: 0.5%;
+        margin-right: 0.5%;
+        margin-top: 1%;
+        margin-bottom: 5%;
+        height: 95%;
+        width: 99%;
+        background-color: #17141d;
+        overflow-y: scroll;
+        border-radius: 2%; 
+        z-index:999;
+      }
+  
+      .sampleTweets{
+          width: 100%;
+          height: 100%;
+          background-color:#17141d;
+          display:flex;
+          flex-direction: column;
+          flex-wrap: nowrap;
+      }
+  
+      .positiveTweetsMasterLocker{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          position: relative;
+          top: 10%;
+          height: 40%;
+          width: 100%;
+          /*background-color: #b00000;*/
+  
+      }
+  
+      .positiveTweetsLocker{
+        display: flex;
+        border-radius: 10%;
+        background-color: cadetblue;
+        overflow-x:auto;
+        flex-wrap: nowrap;
+        width: 80%;
+        height: 50%;
+        position: relative;
+        top: 25%;
+        /*margin-top:%;*/
+        margin-left:1%;
+        /*margin-bottom: 1%;*/
+      }
+  
+      .neutralTweetsMasterLocker{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+      .neutralTweetsLocker{
+        display: flex;
+        border-radius: 10%;
+        background-color: cadetblue;
+        overflow-x:auto;
+        flex-wrap: nowrap;
+        width: 80%;
+        height: 30%;
+        margin-top:1%;
+        margin-left:auto;
+        margin-right: auto;
+        margin-bottom: 1%;
+      }
+  
+      .negativeTweetsMasterLocker{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        position: relative;
+        width: 100%;
+        height: 40%;
+        /*background-color: #d48c8c;*/
+        background-color: #17141d;
+      }
+  
+      .negativeTweetsLocker{
+        display: flex;
+        border-radius: 10%;
+        background-color: cadetblue;
+        overflow-x:auto;
+        flex-wrap: nowrap;
+        width: 80%;
+        height: 50%;
+        position: relative;
+        top: 25%;
+        margin-top:1%;
+        margin-left:1%;
+        margin-bottom: 1%;
+      }
+  
+      .tweetCard{
+        overflow-y:scroll;
+        word-wrap: break-word;
+        height: 150px;
+        min-width: 300px;
+        top:20px;
+        background-color: #17141d;
+        border-radius: 10px;
+        box-shadow: -1rem 0 3rem #000;
+        justify-content: center;
+        margin-left: 0px; 
+        transition: 0.4s ease-out;
+        position: relative;
+        left: 0px;
+        background-color:#fff;
+    }
+  
+    .tweetCard:not(:first-child) {
+        margin-left: -50px;
+    }
+  
+    .tweetCard:is(:first-child) {
+        margin-left: 10px;
+    }
+  
+    .tweetCard:hover {
+      transform: translateY(-20px);
+      transition: 0.3s ease-out;
+    }
+  
+    .tweetCard:hover ~ .tweetCard {
+      position: relative;
+      left: 50px;
+      transition: 0.3s ease-out;
+    }
+  
+  
+    .modalOptionButton{
+      width: 50%;
+      border: #2fb586;
+      border-style: solid;
+      border-width: 3px; 
+      background-color: #17141d;
+      color:#2fb586; 
+    }
+  
+    .modeActive{
+      width: 50%;
+      border: #2fb586;
+      border-style: solid;
+      border-width: 3px; 
+      background-color:#2fb586;
+      color: #17141d;  
+    }
+  
+    .lockerHidden{
+      display: none;
+    }
+  
+    .sentimentsOverTime{
+      width: 100%;
+      height: 100%;
+      background-color:#17141d;
+  
+    }
+  
+    .graphLocker{
+      background-color: black;
+      color: white;
+      align-self: center;
+      width: 80%;
+      height: 35%;
+      display: table;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 15%;
+      border-radius: 5px;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+  
+    .timeOptionButton{
+      position: relative;
+      top: 50px;
+      width: 25%;
+      height: 40px;
+      border: #2fb586;
+      border-style: solid;
+      border-width: 3px; 
+      background-color: #17141d;
+      color:#2fb586; 
+    }
+  
+    .timeActive{
+      position: relative;
+      top: 50px;
+      width: 25%;
+      height: 40px;
+      border: #2fb586;
+      border-style: solid;
+      border-width: 3px; 
+      background-color:#2fb586;
+      color: #17141d;  
+    }
+  
+    .buttonNotShown{
+      display: none;
+    }
+  
+     /*.sentimentsByGeography{
+      width: 100%;
+      height: 100%;
+      background-color:#17141d;
+      display: flex;
+    }
+  
+    .mapDiv{
+      width: 100%;
+      height: 100%;
+      background-color: #17141d;
+      display: flex;
+      flex-direction: row;
+    }
+  
+    .mapDivInfo{
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      height: 100%;
+      width:30%;
+      top: 12%;
+      background-color: #17141d;
+    }
+  
+    .mapDivSvg{
+      display: inline-block;
+      position:relative;
+      height: 90%;
+      width: 70%;
+      top: 0%;
+      background-color: #17141d;
+    }
+  
+    #Port:hover{
+      fill: #2fb586;
+    }
+  
+    .onHoverInfo{
+      background-color: #17141d;
+      color: #2fb586;
+      height: 44%;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+  
+      z-index: 999;
+    }
+  
+    .onHoverInfoHidden{
+      display: none;
+    }
+  
+    .legend { list-style: none; margin-left: auto; margin-right: auto; position: relative; top: 25%;}
+    .legend li { float: left; margin-right: 10px; }
+    .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+  
+    .legend .superawesome { background-color: #2fb586; }
+    .legend .awesome { background-color: #22a3bd; }
+    .legend .kindaawesome { background-color: #d48c8c; }
+    .legend .notawesome { background-color: #b00000; }
+    .legend .nodata { background-color: #ffffff; }*/
+    .sentimentsByGeography{
+      width: 100%;
+      height: 100%;
+      background-color:#17141d;
+      display: flex;
+    }
+  
+    .mapDiv{
+      width: 100%;
+      height: 100%;
+      background-color: #17141d;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .mapDivInfo{
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      height: 42%;
+      width:100%;
+      top: 12%;
+      background-color: #17141d;
+    }
+  
+    .mapDivSvg{
+      display: inline-block;
+      justify-content: center;
+      width: 50%;
+      background-color: #17141d;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  
+    .onHoverInfo{
+      background-color: #17141d;
+      color: #fff;
+      height: 30%;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+  
+      z-index: 999;
+    }
+  
+    .legend { list-style: none; margin-left: auto; margin-right: auto; position: relative; top: 35%;}
+    .legend li { float: left; margin-right: 10px; }
+    .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+  
+    .legend .superawesome { background-color: #2fb586; }
+    .legend .awesome { background-color: #22a3bd; }
+    .legend .kindaawesome { background-color: #d48c8c; }
+    .legend .notawesome { background-color: #b00000; }
+    .legend .nodata { background-color: #ffffff; }
+  }
+  
+  /* Simplifying the sheer amount of redundancy that was here */
+  
+  /* Large Tablets and Desktops */
+  /* Phones + Tablets */
+  @media only screen and (max-width: 1024px){
+    .modalLocker{
+      display: flex;
+      flex-direction: row;
+      position: absolute;
+      left: 0%;
+      right: 0%;
+      top: 0%;
+      bottom: 0%;
+      height: 100%;
+      width: 100%;
+      background-color: #17141d;
+      overflow-y: scroll;
+      overflow-x: scroll;
+      border-radius: 0%; 
+      flex-wrap: nowrap;
+      z-index:999;
+  
+    }
+  
+    .modalOptionButton{
+      width: 50%;
+      border: #2fb586;
+      border-style: solid;
+      border-width: 3px; 
+      background-color: #17141d;
+      color:#2fb586; 
+    }
+    
+    .modeActive{
+      width: 50%;
+      border: #2fb586;
+      border-style: solid;
+      border-width: 3px; 
+      background-color:#2fb586;
+      color: #17141d;  
+    }
+  
+    .tabButtonsLocker {
+      display: flex;
+      flex-direction: row;
+      position: absolute;
+      top: 1%;
+      left: 10%;
+      height: 10%;
+      width: 80%;
+      border:#2fb586;
+      border-style: solid;
+      border-width: 3px;
+      background-color: #17141d;
+      z-index: 999;
+    }
+  
+    .lockerHidden{
+      display: none;
+    }
+  
+    .sampleTweets{
+      top:0%;
+      width: 100%;
+      height: 100%;
+      background-color:#17141d;
+      display:flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+  
+    .positiveTweetsMasterLocker{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      width: 40%;
+      margin:5%;
+      top:13%;
+  }
+  
+    .positiveTweetsLocker{
+      display: flex;
+      border-radius: 2%;
+      background-color: cadetblue;
+      overflow-y:auto;
+      flex-wrap: wrap;
+      width: 100%;
+      height: 70%;
+    }
+  
+    .negativeTweetsMasterLocker{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      width: 40%;
+      margin:5%;
+      top:13%;
+    }
+  
+    .negativeTweetsLocker{
+      display: flex;
+      border-radius: 2%;
+      background-color: cadetblue;
+      overflow-y:auto;
+      flex-wrap: wrap;
+      width: 100%;
+      height: 70%;
+    }
+  
+    /* All Tweet Card related classes for iPhone 5 / SE */
+    .tweetCard{
+      overflow-y:scroll;
+      word-wrap: break-word;
+      height: 100px;
+      min-width: 100%;
+      top:20px;
+      background-color: #17141d;
+      border-radius: 10px;
+      box-shadow: -1rem 0 3rem #000;
+      justify-content: center;
+    /*  margin-left: -50px; */
+      transition: 0.4s ease-out;
+      position: relative;
+      left: 0px;
+      background-color:#fff;
+  }
+  
+    .tweetCard:not(:first-child) {
+        margin-left: 0px;
+    }
+  
+    .tweetCard:hover {
+      transform: translateY(-20px);
+      transition: 0.3s ease-out;
+    }
+  
+    .tweetCard:hover ~ .tweetCard {
+      position: relative;
+      left: 0px;
+      transition: 0.3s ease-out;
+    }
+  
+    .graphLocker{
+      /*position: relative;
+      top: 12%;
+      left: 5%;*/
+      background-color: black;
+      color: white;
+      align-self: center;
+      width: 80%;
+      height: 35%;
+      /*justify-content: center;*/
+      display: table;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 15%;
+      border-radius: 5px;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+  
+    .sentimentsOverTime{
+      width: 100%;
+      height: 100%;
+      background-color:#17141d;
+    }
+  
+    .timeOptionButton{
+      position: relative;
+      bottom: 7%;
+      width: 25%;
+      height: 10%;
+      border: #2fb586;
+      border-style: solid;
+      border-width: 3px; 
+      background-color: #17141d;
+      color:#2fb586; 
+    }
+    
+    .timeActive{
+      position: relative;
+      bottom: 7%;
+      width: 25%;
+      height: 10%;
+      border: #2fb586;
+      border-style: solid;
+      border-width: 3px; 
+      background-color:#2fb586;
+      color: #17141d;  
+    }
+  
+    .buttonNotShown{
+      display: none;
+    }
+  }
+  
+  /* Special for just the Sentiments By Geography tab cuz its some complex shit */
+  /* For tablets and Desktops/Laptops */
+  @media only screen and (min-height: 320px) and (max-height: 374px) and (orientation: landscape){
+    .sentimentsByGeography{
+      width: 100%;
+      height: 100%;
+      background-color:#17141d;
+      display: flex;
+    }
+  
+    .mapDiv{
+      width: 100%;
+      height: 100%;
+      background-color: #17141d;
+      display: flex;
+      flex-direction: row;
+    }
+  
+    .mapDivInfo{
+      /*display: inline-block;*/
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      height: 100%;
+      width:30%;
+      top: 13%;
+      background-color: #17141d;
+    }
+  
+    .mapDivSvg{
+      display: inline-block;
+      position:relative;
+      height: 100%;
+      width: 70%;
+      top: 12%;
+      background-color: #17141d;
+    }
+  
+    #Port:hover{
+      fill: #2fb586;
+    }
+  
+    .onHoverInfo{
+      background-color: #17141d;
+      color: #fff;
+      height: 44%;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+  
+      z-index: 999;
+    }
+  
+    .onHoverInfoHidden{
+      display: none;
+    }
+  
+    .legend { list-style: none; margin-left: auto; margin-right: auto; position: relative; top: -12%;}
+    .legend li { float: left; margin-right: 10px; }
+    .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+  
+    .legend .superawesome { background-color: #2fb586; }
+    .legend .awesome { background-color: #22a3bd; }
+    .legend .kindaawesome { background-color: #d48c8c; }
+    .legend .notawesome { background-color: #b00000; }
+    .legend .nodata { background-color: #ffffff; } 
+  }
+  
+  @media only screen and (min-height: 375px) and (max-height: 812px) and (orientation: landscape){
+      .sentimentsByGeography{
+        width: 100%;
+        height: 100%;
+        background-color:#17141d;
+        display: flex;
+      }
+  
+      .mapDiv{
+        width: 100%;
+        height: 100%;
+        background-color: #17141d;
+        display: flex;
+        flex-direction: row;
+      }
+  
+      .mapDivInfo{
+        /*display: inline-block;*/
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        height: 100%;
+        width:30%;
+        top: 13%;
+        background-color: #17141d;
+      }
+  
+      .mapDivSvg{
+        display: inline-block;
+        position:relative;
+        height: 100%;
+        width: 70%;
+        top: 12%;
+        background-color: #17141d;
+      }
+  
+      #Port:hover{
+        fill: #2fb586;
+      }
+  
+      .onHoverInfo{
+        background-color: #17141d;
+        color: #fff;
+        height: 44%;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+  
+        z-index: 999;
+      }
+  
+      .onHoverInfoHidden{
+        display: none;
+      }
+  
+      .legend { list-style: none; margin-left: auto; margin-right: auto; position: relative; top: 25%;}
+      .legend li { float: left; margin-right: 10px; }
+      .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+  
+      .legend .superawesome { background-color: #2fb586; }
+      .legend .awesome { background-color: #22a3bd; }
+      .legend .kindaawesome { background-color: #d48c8c; }
+      .legend .notawesome { background-color: #b00000; }
+      .legend .nodata { background-color: #ffffff; }
+  }
+  
+  @media only screen and (max-width: 767px) and (orientation: portrait){
+    .sentimentsByGeography{
+      width: 100%;
+      height: 100%;
+      background-color:#17141d;
+      display: flex;
+    }
+  
+    .mapDiv{
+      width: 100%;
+      height: 100%;
+      background-color: #17141d;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .mapDivInfo{
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      height: 42%;
+      width:100%;
+      top: 12%;
+      background-color: #17141d;
+    }
+  
+    .mapDivSvg{
+      display: inline-block;
+      position:relative;
+      height: 46%;
+      width: 100%;
+      top: 0%;
+      background-color: #17141d;
+    }
+  
+    .onHoverInfo{
+      background-color: #17141d;
+      color: #fff;
+      height: 30%;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+  
+      z-index: 999;
+    }
+  
+    .legend { list-style: none; margin-left: auto; margin-right: auto; position: relative; top: 35%;}
+    .legend li { float: left; margin-right: 10px; }
+    .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+  
+    .legend .superawesome { background-color: #2fb586; }
+    .legend .awesome { background-color: #22a3bd; }
+    .legend .kindaawesome { background-color: #d48c8c; }
+    .legend .notawesome { background-color: #b00000; }
+    .legend .nodata { background-color: #ffffff; }
+  }
+  
+  @media only screen and (min-width: 768px) and (max-width: 1366px) and (orientation: portrait){
+    .sentimentsByGeography{
+      width: 100%;
+      height: 100%;
+      background-color:#17141d;
+      display: flex;
+      /*flex-wrap: wrap;
+      display:inline-block;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: center;*/
+    }
+  
+    /*.mapDiv{
+      position: relative;
+      top: -5%;
+      width: 80%;
+      height: 40%;
+      z-index: 998;
+    }*/
+  
+  
+    .mapDiv{
+      /*display: inline-block;
+      position: relative;
+      height: 100%;
+      width: 70%;
+      top: 12%;
+      left: 30%;
+      margin-left: 30%;
+      background-color: #22a3bd;
+      padding-bottom: 50%;
+      overflow: hidden; */
+      width: 100%;
+      height: 100%;
+      background-color: #17141d;
+      display: flex;
+      flex-direction: row;
+    }
+  
+    .mapDivInfo{
+      /*display: inline-block;*/
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      height: 100%;
+      width:30%;
+      top: 12%;
+      background-color: #17141d;
+    }
+  
+    .mapDivSvg{
+      display: inline-block;
+      position:relative;
+      height: 100%;
+      width: 70%;
+      top: 12%;
+      background-color: #17141d;
+    }
+  
+    #Port:hover{
+      fill: #2fb586;
+    }
+  
+    .onHoverInfo{
+      background-color: #17141d;
+      color: #fff;
+      height: 44%;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+  
+      z-index: 999;
+    }
+  
+    .onHoverInfoHidden{
+      display: none;
+    }
+  
+    .legend {list-style: none; position: relative; top: 25%;}
+    .legend li { float: left; margin-right: 10px; }
+    .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+  
+    .legend .superawesome { background-color: #2fb586; }
+    .legend .awesome { background-color: #22a3bd; }
+    .legend .kindaawesome { background-color: #d48c8c; }
+    .legend .notawesome { background-color: #b00000; }
+    .legend .nodata { background-color: #ffffff; }
+  }
+  
+  /* Portrait Phones + Tablets */
+  @media only screen and (max-height: 1366px) and (orientation: portrait){
+    
+  }
+  
+  @media only screen and (orientation: landscape){
+    .close {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      width: 32px;
+      height: 32px;
+      opacity: 0.4;
+      color: #2fb586;
+      z-index: 999;
+    }
+    .close:hover {
+      opacity: 1;
+    }
+    .close:before, .close:after {
+      position: absolute;
+      left: 15px;
+      content: ' ';
+      height: 33px;
+      width: 2px;
+      background-color: #ffffff;
+    }
+    .close:before {
+      transform: rotate(45deg);
+    }
+    .close:after {
+      transform: rotate(-45deg);
+    }
+  }
+  
+  
+  @media only screen and (orientation: portrait){
+    .close {
+      position: absolute;
+      left: 95%;
+      display: flex;
+      bottom: 2.5%;
+      width: 5%;
+      height: 2%;
+      opacity: 0.4;
+      color: #2fb586;
+      z-index: 999;
+    }
+    .close:hover {
+      opacity: 1;
+    }
+    .close:before, .close:after {
+      position: absolute;
+      content: ' ';
+      height: 33px;
+      width: 2px;
+      background-color: #ffffff;
+    }
+    .close:before {
+      transform: rotate(45deg);
+    }
+    .close:after {
+      transform: rotate(-45deg);
+    }
+  }

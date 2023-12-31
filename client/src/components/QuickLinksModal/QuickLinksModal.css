@@ -1,0 +1,44 @@
+.quickLinksModalLocker{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 25%;
+    margin-bottom: 25%;
+    height: 50%;
+    width: 60%;
+    background-color: #17141d;
+    overflow-y: scroll;
+    border-radius: 2%; 
+    z-index:999;
+}
+
+.quickLink{
+    color: white;
+}
+
+.quickLinksLocker{
+    height: 90%;
+    overflow-y:scroll;
+}
+
+.quickLinksModalLocker2{
+    position: absolute;
+    top: 10%;
+    right: 30%;
+    height: 80%;
+    width: 40%;
+    background-color: #17141d;
+    border-radius: 2%;
+    z-index: 999;
+}
+
+.quickLinksTitle{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    color: white;
+    font-size: medium;
+}

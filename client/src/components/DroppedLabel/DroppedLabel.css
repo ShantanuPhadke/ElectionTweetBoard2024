@@ -1,0 +1,11 @@
+.dropped_div{
+    height: 30px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 12px;
+    border: 1px;
+    border-style: solid;
+    color: lightseagreen;
+    border-color: lightseagreen;
+}
