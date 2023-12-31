@@ -1,3 +1,4 @@
+-f https://download.pytorch.org/whl/torch_stable.html
 APScheduler==3.10.4
 beautifulsoup4==4.12.2
 blinker==1.7.0
