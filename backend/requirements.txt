@@ -1,4 +1,3 @@
--f https://download.pytorch.org/whl/torch_stable.html
 APScheduler==3.10.4
 beautifulsoup4==4.12.2
 blinker==1.7.0
@@ -35,7 +34,7 @@ soupsieve==2.5
 SQLAlchemy==2.0.23
 sympy==1.12
 tokenizers==0.15.0
-torch==1.5.0+cpu
+torch==2.1.2
 tqdm==4.66.1
 transformers==4.36.2
 typing_extensions==4.9.0
