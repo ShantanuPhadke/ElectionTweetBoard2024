@@ -13,7 +13,7 @@ app = Flask(__name__)
 CORS(app, origins=['http://localhost:3000'])
 app.config['SECRET_KEY'] = 'secret_key'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://snwmumshcsdhgd:63d1821b97e3e24111e9d36e496538ea0147c55db5ad52f5a7ed6357a8196c3d@ec2-3-217-146-37.compute-1.amazonaws.com:5432/dv41rc55lk3kl';
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dev.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///prod.db'
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 db = SQLAlchemy(app)
@@ -51,7 +51,7 @@ def masterUpdateMethod():
             except Exception as e:
                 print(e)
                 continue
-        print('politician = ' + politician + ', all_politician_sentiment_data[politician] = ' + str(all_politician_sentiment_data[politician]))
+        # print('politician = ' + politician + ', all_politician_sentiment_data[politician] = ' + str(all_politician_sentiment_data[politician]))
     # (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
     # object made above.
     with app.app_context():
