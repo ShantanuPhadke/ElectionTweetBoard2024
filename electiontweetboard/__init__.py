@@ -28,7 +28,6 @@ my_twitter_scraper = TwitterScraper.getInstance()
 my_sentiment_analyzer = SentimentAnalyzer.getInstance()
 
 def masterUpdateMethod():
-    '''
     # Every hour lets say, do the following:
     # (1) Getting the list of politicians
     politicians = [
@@ -58,8 +57,7 @@ def masterUpdateMethod():
         commands.loadAllSentimentDistributions(all_politician_sentiment_data)
 
     # The rest of the stuff the Frontend / UI should take care of.
-    '''
-    tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 5000, 'twitter-roberta-minified')
+    # tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 5000, 'twitter-roberta-minified')
 
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
