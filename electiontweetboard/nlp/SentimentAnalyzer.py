@@ -36,7 +36,7 @@ class SentimentAnalyzer:
 			tweet_words.append(word)
 
 		tweet_processed = ' '.join(tweet_words)
-		print('tweet_processed = ' + str(tweet_processed))
+		# print('tweet_processed = ' + str(tweet_processed))
 		roberta = "cardiffnlp/twitter-roberta-base-sentiment"
 		model = AutoModelForSequenceClassification.from_pretrained(roberta)
 		# tokenizer = AutoTokenizer.from_pretrained(roberta)
@@ -48,11 +48,11 @@ class SentimentAnalyzer:
 		labels = ['Negative', 'Neutral', 'Positive']
 		# actual sentiment analysis
 		encoded_tweet = tokenizer(tweet_processed, return_tensors='pt')
-		print('encoded_tweet = ' + str(encoded_tweet))
+		# print('encoded_tweet = ' + str(encoded_tweet))
 		output = model(**encoded_tweet)
 		scores = output[0][0].detach().numpy()
 		scores = softmax(scores)
-		print('scores = ' + str(scores))
+		# print('scores = ' + str(scores))
 		max_score = 0
 		max_score_label = None
 
