@@ -48,9 +48,10 @@ def masterUpdateMethod():
                 all_politician_sentiment_data[politician].append({
                     'tweet': tweet['text'], 'sentiment': sentiment
                 })
-            except:
+            except Exception as e:
+                print(e)
                 continue
-        # print('politician = ' + politician + ', all_politician_sentiment_data[politician] = ' + str(all_politician_sentiment_data[politician]))
+        print('politician = ' + politician + ', all_politician_sentiment_data[politician] = ' + str(all_politician_sentiment_data[politician]))
     # (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
     # object made above.
     with app.app_context():

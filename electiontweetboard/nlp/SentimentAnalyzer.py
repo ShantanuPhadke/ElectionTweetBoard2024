@@ -1,5 +1,6 @@
 from transformers import AutoTokenizer, PreTrainedTokenizerFast, AutoModelForSequenceClassification
 from scipy.special import softmax
+import os
 
 class SentimentAnalyzer:
 	# This will represent the one and only 'true' Twitter Connection 
@@ -35,22 +36,20 @@ class SentimentAnalyzer:
 			tweet_words.append(word)
 
 		tweet_processed = ' '.join(tweet_words)
-		print('tweet_processed = ' + str(tweet_processed))
 		roberta = "cardiffnlp/twitter-roberta-base-sentiment"
 		model = AutoModelForSequenceClassification.from_pretrained(roberta)
 		# tokenizer = AutoTokenizer.from_pretrained(roberta)
-		tokenizer = PreTrainedTokenizerFast(tokenizer_file="twitter-roberta-unified/tokenizer.json")
+		project_dir = os.path.dirname(__file__)
+		tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "tokenizer.json"))
 		tokenizer.model_max_length = 512
 		tokenizer.padding = 'max_length'
 		tokenizer.truncation = True
 		labels = ['Negative', 'Neutral', 'Positive']
 		# actual sentiment analysis
 		encoded_tweet = tokenizer(tweet_processed, return_tensors='pt')
-		print('encoded_tweet = ' + str(encoded_tweet))
 		output = model(**encoded_tweet)
 		scores = output[0][0].detach().numpy()
 		scores = softmax(scores)
-		print('scores = ' + str(scores))
 		max_score = 0
 		max_score_label = None
 
@@ -62,8 +61,4 @@ class SentimentAnalyzer:
 				max_score = s
 				max_score_label = l
 		
-		#print('Tweet = ' + first_tweet_text)
-		#print('Label = ' + max_score_label)
-		#print('Probability = ' + str(max_score))
-		print("max_score_label = " + str(max_score_label) + ', max_score = ' + str(max_score))
 		return max_score_label
