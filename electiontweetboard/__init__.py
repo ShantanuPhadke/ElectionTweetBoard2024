@@ -39,7 +39,7 @@ def masterUpdateMethod():
     # (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
     all_politician_sentiment_data = {}
     for politician in politicians:
-        tweets = my_twitter_scraper.getTweetsForQuery(politician, 50)
+        tweets = my_twitter_scraper.getTweetsForQuery(politician, 25)
         all_politician_sentiment_data[politician] = []
         for tweet in tweets:
             try:
