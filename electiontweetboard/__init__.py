@@ -7,11 +7,13 @@ import datetime
 import atexit
 from apscheduler.schedulers.background import BackgroundScheduler
 
+from electiontweetboard.tokenizers.tokenizer_utils import tokenizer_minify
+
 app = Flask(__name__)
 CORS(app, origins=['http://localhost:3000'])
 app.config['SECRET_KEY'] = 'secret_key'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://snwmumshcsdhgd:63d1821b97e3e24111e9d36e496538ea0147c55db5ad52f5a7ed6357a8196c3d@ec2-3-217-146-37.compute-1.amazonaws.com:5432/dv41rc55lk3kl';
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///prod.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dev.db'
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 db = SQLAlchemy(app)
@@ -26,6 +28,7 @@ my_twitter_scraper = TwitterScraper.getInstance()
 my_sentiment_analyzer = SentimentAnalyzer.getInstance()
 
 def masterUpdateMethod():
+    '''
     # Every hour lets say, do the following:
     # (1) Getting the list of politicians
     politicians = [
@@ -55,6 +58,8 @@ def masterUpdateMethod():
         commands.loadAllSentimentDistributions(all_politician_sentiment_data)
 
     # The rest of the stuff the Frontend / UI should take care of.
+    '''
+    tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 5000, 'twitter-roberta-minified')
 
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
