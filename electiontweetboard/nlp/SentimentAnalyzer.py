@@ -41,7 +41,7 @@ class SentimentAnalyzer:
 		# tokenizer = AutoTokenizer.from_pretrained(roberta)
 		project_dir = os.path.dirname(__file__)
 		tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "tokenizer.json"))
-		tokenizer.model_max_length = 512
+		tokenizer.model_max_length = 1024
 		tokenizer.padding = 'max_length'
 		tokenizer.truncation = True
 		labels = ['Negative', 'Neutral', 'Positive']
