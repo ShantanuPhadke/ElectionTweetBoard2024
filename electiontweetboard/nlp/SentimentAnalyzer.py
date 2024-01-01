@@ -22,6 +22,11 @@ class SentimentAnalyzer:
 			raise Exception("Derp de Herp Herp! SentimentAnalyzer is a singleton mate!")
 		else:
 			SentimentAnalyzer._instance = self
+			project_dir = os.path.dirname(__file__)
+			SentimentAnalyzer.tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "tokenizer.json"))
+			SentimentAnalyzer.tokenizer.model_max_length = 1024
+			SentimentAnalyzer.tokenizer.padding = 'max_length'
+			SentimentAnalyzer.tokenizer.truncation = True
 	
 	def setQueryTerm(self, query_term):
 		self.query_term = query_term
@@ -40,14 +45,9 @@ class SentimentAnalyzer:
 		roberta = "cardiffnlp/twitter-roberta-base-sentiment"
 		model = AutoModelForSequenceClassification.from_pretrained(roberta)
 		# tokenizer = AutoTokenizer.from_pretrained(roberta)
-		project_dir = os.path.dirname(__file__)
-		tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "tokenizer.json"))
-		tokenizer.model_max_length = 1024
-		tokenizer.padding = 'max_length'
-		tokenizer.truncation = True
 		labels = ['Negative', 'Neutral', 'Positive']
 		# actual sentiment analysis
-		encoded_tweet = tokenizer(tweet_processed, return_tensors='pt')
+		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt')
 		# print('encoded_tweet = ' + str(encoded_tweet))
 		output = model(**encoded_tweet)
 		scores = output[0][0].detach().numpy()

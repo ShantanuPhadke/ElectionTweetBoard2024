@@ -56,9 +56,8 @@ def masterUpdateMethod():
     # object made above.
     with app.app_context():
         commands.loadAllSentimentDistributions(all_politician_sentiment_data)
-
     # The rest of the stuff the Frontend / UI should take care of.
-    # tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 5000, 'twitter-roberta-minified')
+    # tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 1000, 'twitter-roberta-minified')
 
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
