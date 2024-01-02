@@ -23,7 +23,8 @@ class SentimentAnalyzer:
 		else:
 			SentimentAnalyzer._instance = self
 			project_dir = os.path.dirname(__file__)
-			SentimentAnalyzer.tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "tokenizer.json"))
+			# SentimentAnalyzer.tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "twitter-roberta-minified-15k/tokenizer.json"))
+			SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained('cardiffnlp/twitter-roberta-base-sentiment')
 			SentimentAnalyzer.tokenizer.model_max_length = 1024
 			SentimentAnalyzer.tokenizer.padding = 'max_length'
 			SentimentAnalyzer.tokenizer.truncation = True
