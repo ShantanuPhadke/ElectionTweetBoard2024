@@ -1,5 +1,5 @@
--f https://download.pytorch.org/whl/torch_stable.html
-torch==2.1.2+cpu
+accelerate==0.25.0
+altgraph @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/altgraph-0.17.2-py2.py3-none-any.whl
 APScheduler==3.10.4
 beautifulsoup4==4.12.2
 blinker==1.7.0
@@ -14,6 +14,7 @@ Flask==3.0.0
 Flask-Cors==4.0.0
 Flask-SQLAlchemy==3.1.1
 fsspec==2023.12.2
+future @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/future-0.18.2-py3-none-any.whl
 gunicorn==21.2.0
 huggingface-hub==0.20.1
 idna==3.6
@@ -22,6 +23,7 @@ iniconfig==2.0.0
 itsdangerous==2.1.2
 Jinja2==3.1.2
 lxml==4.9.4
+macholib @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot7/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-133.100.1.1/macholib-1.15.2-py2.py3-none-any.whl
 MarkupSafe==2.1.3
 mpmath==1.3.0
 networkx==3.2.1
@@ -31,6 +33,7 @@ packaging==23.2
 pipenv==2023.11.15
 platformdirs==4.1.0
 pluggy==1.3.0
+psutil==5.9.7
 psycopg2-binary==2.9.9
 pytest==7.4.2
 pytz==2023.3.post1
@@ -45,6 +48,7 @@ SQLAlchemy==2.0.23
 sympy==1.12
 tokenizers==0.15.0
 tomli==2.0.1
+torch==2.1.2
 tqdm==4.66.1
 transformers==4.36.2
 typing_extensions==4.9.0

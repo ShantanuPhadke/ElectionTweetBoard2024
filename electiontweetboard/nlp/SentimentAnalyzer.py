@@ -44,7 +44,7 @@ class SentimentAnalyzer:
 		tweet_processed = ' '.join(tweet_words)
 		# print('tweet_processed = ' + str(tweet_processed))
 		roberta = "cardiffnlp/twitter-roberta-base-sentiment"
-		model = AutoModelForSequenceClassification.from_pretrained(roberta)
+		model = AutoModelForSequenceClassification.from_pretrained(roberta, low_cpu_mem_usage=True)
 		# tokenizer = AutoTokenizer.from_pretrained(roberta)
 		labels = ['Negative', 'Neutral', 'Positive']
 		# actual sentiment analysis
