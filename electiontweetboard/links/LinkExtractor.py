@@ -1,4 +1,4 @@
-import urllib3
+import urllib.request
 from bs4 import BeautifulSoup
 
 class LinkExtractor:
@@ -42,9 +42,9 @@ class LinkExtractor:
 		try: 
 			# use headers for the forbidden errors
 			headers = {"User-Agent": "Mozilla/5.0"}
-			req = urllib3.request.Request(link, headers =headers)
-			html = urllib3.request.urlopen(req)
-			contentToProcess = urllib3.request.urlopen(req)
+			req = urllib.request.Request(link, headers =headers)
+			html = urllib.request.urlopen(req)
+			contentToProcess = urllib.request.urlopen(req)
 			htmlStr = str(html.read())
 
 			if query_term not in htmlStr:
