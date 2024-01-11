@@ -64,8 +64,10 @@ db_update_scheduler = BackgroundScheduler()
 db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now())
 # It'll be scheduled once every hour
 db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
-# Explicitly starting the job in the background thread
-if not db_update_scheduler.running:
-	db_update_scheduler.start()
 # Shut down the scheduler when exiting the app
 atexit.register(lambda: db_update_scheduler.shutdown())
+# Explicitly starting the job in the background thread
+# 01-10-24: Moving scheduler.start() to the bottom of __init__.py according to
+# https://github.com/viniciuschiele/flask-apscheduler/issues/147
+if not db_update_scheduler.running:
+	db_update_scheduler.start()
