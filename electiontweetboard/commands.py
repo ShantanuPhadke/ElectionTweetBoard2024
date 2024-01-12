@@ -7,7 +7,7 @@ import datetime
 my_link_extractor = LinkExtractor()
 
 def loadStateSentimentDistribution(query_term, state_symbol, negative_percent, neutral_percent, positive_percent):
-	old_state_sentiment_distribution = StateSentiment.query.filter_by(query_term=politician, state_symbol=state_symbol).all()
+	old_state_sentiment_distribution = StateSentiment.query.filter_by(query_term=query_term, state_symbol=state_symbol).all()
 	state_sentiment_distribution_obj = StateSentiment(
 			query_term=query_term,
 			state_symbol=state_symbol,
