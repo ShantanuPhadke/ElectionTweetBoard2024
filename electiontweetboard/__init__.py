@@ -91,7 +91,7 @@ def masterGeographicSentimentAnalyzer():
 			num_total = num_positive + num_negative + num_neutral
 			with app.app_context():
 				commands.loadStateSentimentDistribution(
-					politician, state, num_negative/num_total, num_neutral/num_total, num_positive/num_total
+					politician, state, (num_negative/num_total)*100, (num_neutral/num_total)*100, (num_positive/num_total)*100
 				)
 			
 
