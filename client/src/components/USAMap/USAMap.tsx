@@ -89,8 +89,8 @@ class USAMap extends React.Component<USAMapProps, USAMapState> {
         
         return (
             <svg
-                /*width={mapDivWidth}
-                height={mapDivHeight}*/
+                width={mapDivWidth}
+                height={mapDivHeight}
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
                 viewBox={viewBoxString}
