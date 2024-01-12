@@ -22,10 +22,10 @@ class TwitterScraper:
 			TwitterScraper._instance = self
 			TwitterScraper.scraper = Nitter()
 
-	def getTweetsForQuery(self, query_string, number_tweets):
+	def getTweetsForQuery(self, query_string, number_tweets, near=None):
 		while True:
 			try:
-				search_results = TwitterScraper.scraper.get_tweets(query_string, mode='term', number=number_tweets)
+				search_results = TwitterScraper.scraper.get_tweets(query_string, mode='term', number=number_tweets, near=near)
 				if len(search_results['tweets']) > 0:
 					break
 				else:

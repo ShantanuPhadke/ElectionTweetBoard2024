@@ -1,10 +1,24 @@
 from electiontweetboard import app, db
-from electiontweetboard.models import Tweet, SentimentDistribution, SentimentsOverTime, QuickLink
+from electiontweetboard.models import Tweet, SentimentDistribution, SentimentsOverTime, StateSentiment, QuickLink
 from electiontweetboard.links.LinkExtractor import LinkExtractor
 
 import datetime
 
 my_link_extractor = LinkExtractor()
+
+def loadStateSentimentDistribution(query_term, state_symbol, negative_percent, neutral_percent, positive_percent):
+	old_state_sentiment_distribution = StateSentiment.query.filter_by(query_term=politician, state_symbol=state_symbol).all()
+	state_sentiment_distribution_obj = StateSentiment(
+			query_term=query_term,
+			state_symbol=state_symbol,
+			positive_percent=positive_percent,
+			negative_percent=negative_percent,
+			neutral_percent=neutral_percent
+		)
+	db.session.add(state_sentiment_distribution_obj)
+	db.session.commit()
+	StateSentiment.query.filter_by(id=old_state_sentiment_distribution[0].id).delete()
+	db.session.commit()
 
 def loadAllSentimentDistributions(all_politician_sentiment_data):
 	all_politician_sentiment_distributions = {}

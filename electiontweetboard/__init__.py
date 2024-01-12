@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_migrate import Migrate
 
 # For Background Scheduling
 import datetime
@@ -18,15 +19,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///prod.db'
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 from electiontweetboard import routes, commands
 # Our TwitterConnection and VaderWrapper Singletons of course
 from electiontweetboard.data.TwitterScraper import TwitterScraper
 from electiontweetboard.nlp.SentimentAnalyzer import SentimentAnalyzer
+from electiontweetboard.locations.LocationManager import LocationManager
+from electiontweetboard.politicians.PoliticianManager import PoliticianManager
 
 # Our actual TwitterConnection and VADER Wrapper objects
 my_twitter_scraper = TwitterScraper.getInstance()
 my_sentiment_analyzer = SentimentAnalyzer.getInstance()
+my_location_manager = LocationManager.getInstance()
+my_politician_manager = PoliticianManager.getInstance()
 
 def masterUpdateMethod():
     # Every hour lets say, do the following:
@@ -60,17 +66,59 @@ def masterUpdateMethod():
     # The rest of the stuff the Frontend / UI should take care of.
     # tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')
 
-
+def masterGeographicSentimentAnalyzer():
+	all_states_info = my_location_manager.getAllStatesInfo()
+	all_politicians = my_politician_manager.getPoliticians()
+	for politician in all_politician:
+		for state in all_states_info:
+			num_positive = 0.0
+			num_negative = 0.0
+			num_neutral = 0.0
+			for city in all_states_info[state]:
+				current_city_info = all_states_info[state][city]
+				tweets =  my_twitter_scraper.getTweetsForQuery(politician, 10, current_city_info)
+				for tweet in tweets:
+					try:
+						sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
+						if sentiment == 'Positive':
+							num_positive += 1
+						elif sentiment == 'Negative':
+							num_negative += 1
+						else:
+							num_neutral += 1
+					except Exception as e:
+						continue
+			num_total = num_positive + num_negative + num_neutral
+			commands.loadStateSentimentDistribution(
+				politician, state, num_negative/num_total, num_neutral/num_total, num_positive/num_total
+			)
+			
 
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
-db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now())
+db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod')
+db_update_scheduler.add_job(func=masterGeographicSentimentAnalyzer,trigger="date", run_date=datetime.datetime.now(), name='masterGeographicSentimentAnalyzer')
 # Start the next instance of the job once the current instance completes
 def my_listener(event):
-	if event.exception:
-		print('The job has crashed')
+	# if event.exception:
+	# print('The job has crashed')
+	# else:
+	job = db_update_scheduler.get_job(event.job_id)
+	if job.name == 'masterUpdateMethod':
+		db_update_scheduler.add_job(
+			func=masterUpdateMethod,
+			trigger="date",
+			run_date=datetime.datetime.now(),
+			name='masterUpdateMethod'
+		)
 	else:
-		db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now())
+		db_update_scheduler.add_job(
+			func=masterGeographicSentimentAnalyzer,
+			trigger="date",
+			run_date=datetime.datetime.now(),
+			name='masterGeographicSentimentAnalyzer'
+		)
+
 db_update_scheduler.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
 # db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
 # Shut down the scheduler when exiting the app

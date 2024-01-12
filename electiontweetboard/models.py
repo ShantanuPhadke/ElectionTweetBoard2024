@@ -30,6 +30,17 @@ class SentimentsOverTime(db.Model):
     def __repr__(self):
         return f"SentimentsOverTime ('{self.query_term}', '{self.timestamp}', '{self.positive_percent}', '{self.negative_percent}', '{self.neutral_percent}')"
 
+class StateSentiment(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	query_term = db.Column(db.String(40), unique=False, nullable=False)
+	state_symbol = db.Column(db.String(2), unique=False, nullable=False)
+	positive_percent = db.Column(db.Float, unique=False, nullable=False)
+	negative_percent = db.Column(db.Float, unique=False, nullable=False)
+	neutral_percent = db.Column(db.Float, unique=False, nullable=False)
+
+	def __repr__(self):
+		return f"StateSentiment ('{self.query_term}', '{self.positive_percent}', '{self.negative_percent}', '{self.neutral_percent}')"
+
 class QuickLink(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     query_term = db.Column(db.String(40), unique=False, nullable=False)
