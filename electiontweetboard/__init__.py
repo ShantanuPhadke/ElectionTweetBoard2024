@@ -69,7 +69,7 @@ def masterUpdateMethod():
 def masterGeographicSentimentAnalyzer():
 	all_states_info = my_location_manager.getAllStatesInfo()
 	all_politicians = my_politician_manager.getPoliticians()
-	for politician in all_politician:
+	for politician in all_politicians:
 		for state in all_states_info:
 			num_positive = 0.0
 			num_negative = 0.0
