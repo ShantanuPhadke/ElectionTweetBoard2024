@@ -3,6 +3,7 @@ import './TweetsModal.css';
 import 'font-awesome/css/font-awesome.min.css';
 import { LineChart } from 'react-chartkick';
 import 'chartkick/chart.js';
+import USAMap from '../USAMap/USAMap';
 
 import { BASE_URL } from '../../constants';
 
@@ -307,6 +308,9 @@ class TweetsModal extends React.Component<TweetsModalProps, TweetsModalState> {
                     <button className={(this.state.modalMode === 1) ? "modeActive":"modalOptionButton"} onClick={this.switchToModeOne}>
                         Sentiments Over Time
                     </button>
+                    <button className={(this.state.modalMode === 2) ? "modeActive":"modalOptionButton"} onClick={this.switchToModeTwo}>
+                        Sentiments By Geography
+                    </button>
                 </div>
                 <div className={"close"} onClick={this.props.closeFunction}/>
                 <div className={(this.state.modalMode === 0) ? "sampleTweets" : "lockerHidden"}>
@@ -462,6 +466,67 @@ class TweetsModal extends React.Component<TweetsModalProps, TweetsModalState> {
                         <button className={this.sentimentsOverTimeButtonClass(0, 3)} onClick={this.switchToMax}>
                             Max
                         </button>
+                    </div>
+                </div>
+
+                <div className={(this.state.modalMode === 2) ?  "sentimentsByGeography" : "lockerHidden"}>
+                        
+                    {/*<div className={this.state.currentStateHoveredOver !== 'none' ? "onHoverInfo" : "onHoverInfoHidden"}>*/}
+                    {/*<div className={"onHoverInfo"}>
+                        {this.state.currentStateHoveredOver !== 'none' && <h4>{this.state.currentStateHoveredOver}</h4>}
+                        {this.state.currentStateHoveredOver !== 'none' && this.state.currentStateHoveredOverScore >= 0 && <h5>State Score: {this.state.currentStateHoveredOverScore}</h5>}
+                        {this.state.currentStateHoveredOver !== 'none' && this.state.currentStateHoveredOverScore < 0 && <h5> Not Enough Data Picked Up! </h5>}
+                        {this.state.currentStateHoveredOver === 'none' && <h4> Hover Over States To See Scores! </h4>}
+                    </div>*/}
+                   
+                   <div className={"mapDiv"}>
+                        <div className={"mapDivInfo"}>
+                            <div className={"onHoverInfo"}>
+                                {/* Below is the case for windows with heights */}
+                                {this.state.currentStateHoveredOver !== 'none' && windowHeight <= 374 && <h4 style={{position: 'relative', top: '20%'}}>{this.state.currentStateHoveredOver}</h4>}
+                                {this.state.currentStateHoveredOver !== 'none' && this.state.currentStateHoveredOverScore >= 0 && windowHeight <= 374 && <h5 style={{position: 'relative', top: '20%'}}>% Positive or Neutral Sentiment: {this.state.currentStateHoveredOverScore.toFixed(2)}</h5>}
+                                {this.state.currentStateHoveredOver !== 'none' && this.state.currentStateHoveredOverScore < 0 && windowHeight <= 374 && <h5 style={{position: 'relative', top: '20%'}}> Not Enough Data Picked Up! </h5>}
+                                {this.state.currentStateHoveredOver === 'none' && windowHeight <= 374 && <h4 style={{position:'relative', top:'20%'}}> Hover Over States To See Scores for {this.props.name}! </h4>}
+
+                                {this.state.currentStateHoveredOver !== 'none' && windowHeight > 374 && <h4 style={{position: 'relative', top: '20%'}}>{this.state.currentStateHoveredOver}</h4>}
+                                {this.state.currentStateHoveredOver !== 'none' && this.state.currentStateHoveredOverScore >= 0 && windowHeight > 374 && <h5 style={{position: 'relative', top: '20%'}}>% Positive or Neutral Sentiment: {this.state.currentStateHoveredOverScore.toFixed(2)}</h5>}
+                                {this.state.currentStateHoveredOver !== 'none' && this.state.currentStateHoveredOverScore < 0 && windowHeight > 374 && <h5 style={{position: 'relative', top: '20%'}}> Not Enough Data Picked Up! </h5>}
+                                {this.state.currentStateHoveredOver === 'none' && windowHeight > 374 && <h4 style={{position:'relative', top:'20%'}}> Hover Over States To See Scores for {this.props.name}! </h4>}
+                            </div>
+
+                            { windowHeight <= 360 && <div style={{marginLeft: 'auto', marginRight: 'auto', height: '44%', backgroundColor:'#17141d'}}> 
+                                <ul className={"legend"}>
+                                    <li style={{color: 'white'}}><span className={"superawesome"}></span> Favorable </li>
+                                    <li style={{color: 'white'}}><span className={"awesome"}></span> Slightly Favorable </li>
+                                    <li style={{color: 'white'}}><span className={"kindaawesome"}></span> Unfavorable </li>
+                                    <li style={{color: 'white'}}><span className={"notawesome"}></span> Very Unfavorable </li>
+                                    <li style={{color: 'white'}}><span className={"nodata"}></span>No Data</li>
+                                </ul>
+                            </div>}
+
+                            {windowHeight > 360 && windowHeight <=768 && <div style={{position: 'relative', top:"-2%", marginLeft: 'auto', marginRight: 'auto', height: '44%', backgroundColor:'#17141d'}}> 
+                                <ul className={"legend"}>
+                                    <li style={{color: 'white'}}><span className={"superawesome"}></span> Favorable </li>
+                                    <li style={{color: 'white'}}><span className={"awesome"}></span> Slightly Favorable </li>
+                                    <li style={{color: 'white'}}><span className={"kindaawesome"}></span> Unfavorable </li>
+                                    <li style={{color: 'white'}}><span className={"notawesome"}></span> Very Unfavorable </li>
+                                    <li style={{color: 'white'}}><span className={"nodata"}></span>No Data</li>
+                                </ul>
+                            </div>}
+
+                            {windowHeight > 768 && <div className={this.state.currentStateHoveredOver === 'none' ? "largeScreenLegend":"largeScreenLegendInvisible"}> 
+                                <ul className={"legend"}>
+                                    <li style={{color: 'white'}}><span className={"superawesome"}></span> Favorable </li>
+                                    <li style={{color: 'white'}}><span className={"awesome"}></span> Slightly Favorable </li>
+                                    <li style={{color: 'white'}}><span className={"kindaawesome"}></span> Unfavorable </li>
+                                    <li style={{color: 'white'}}><span className={"notawesome"}></span> Very Unfavorable </li>
+                                    <li style={{color: 'white'}}><span className={"nodata"}></span>No Data</li>
+                                </ul>
+                            </div>}
+                       </div>
+                       <div className={"mapDivSvg"}>
+                            <USAMap name={this.props.name} mouseOverHandler={this.stateHoveredOver} mouseExitHandler={this.stateHoveredOutOf}/> 
+                       </div>
                     </div>
                 </div>
             </div>

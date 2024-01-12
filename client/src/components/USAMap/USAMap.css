@@ -1,0 +1,75 @@
+.stateDivClass1{
+    z-index: 999;
+    fill: #2fb586;
+}
+
+.stateDivClass1:hover{
+    fill: #14523c;
+}
+
+.stateDivClass2{
+    z-index: 999;
+    fill: #22a3bd;
+}
+
+.stateDivClass2:hover{
+    fill: #135663;
+}
+
+.stateDivClass3{
+    z-index: 999;
+    fill: #d48c8c
+}
+
+.stateDivClass3:hover{
+    fill: #690909;
+}
+
+.stateDivClass4{
+    z-index: 999;
+    fill: #b00000;
+}
+
+.stateDivClass4:hover{
+    fill: #470101;
+}
+
+.stateDivClass0{
+    z-index: 999;
+    fill: #ffffff;
+}
+
+/* iPad, iPad Pro portrait */
+@media only screen and (min-width: 768px) and (max-width: 1366px) and (orientation: portrait){
+    .svgClass{
+        display: inline-block;
+        position: relative;
+        bottom: -15%;
+    }
+}
+
+@media only screen and (min-width: 1367px){
+    .svgClass{
+        display: inline-block;
+        position: relative;
+    }
+}
+
+/* iPad, iPad Pro landscape */
+@media only screen and (min-height: 768px) and (orientation: landscape){
+    .svgClass{
+        display: inline-block;
+        position: relative;
+    }
+}
+
+@media only screen and (max-height: 767px) and (orientation: landscape){
+    .svgClass{
+        display: inline-block;
+        position: relative;
+        bottom:20%;
+        height: 75%;
+    } 
+}
+
+/* Really small phone screens */
