@@ -17,7 +17,8 @@ def loadStateSentimentDistribution(query_term, state_symbol, negative_percent, n
 		)
 	db.session.add(state_sentiment_distribution_obj)
 	db.session.commit()
-	StateSentiment.query.filter_by(id=old_state_sentiment_distribution[0].id).delete()
+	if len(old_state_sentiment_distribution) == 1:
+		StateSentiment.query.filter_by(id=old_state_sentiment_distribution[0].id).delete()
 	db.session.commit()
 
 def loadAllSentimentDistributions(all_politician_sentiment_data):
