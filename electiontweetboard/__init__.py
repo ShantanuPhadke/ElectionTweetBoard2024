@@ -100,24 +100,24 @@ db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=dat
 db_update_scheduler.add_job(func=masterGeographicSentimentAnalyzer,trigger="date", run_date=datetime.datetime.now(), name='masterGeographicSentimentAnalyzer')
 # Start the next instance of the job once the current instance completes
 def my_listener(event):
-	# if event.exception:
-	# print('The job has crashed')
-	# else:
-	job = db_update_scheduler.get_job(event.job_id)
-	if job.name == 'masterUpdateMethod':
-		db_update_scheduler.add_job(
-			func=masterUpdateMethod,
-			trigger="date",
-			run_date=datetime.datetime.now(),
-			name='masterUpdateMethod'
-		)
+	if event.exception:
+		print('The job has crashed')
 	else:
-		db_update_scheduler.add_job(
-			func=masterGeographicSentimentAnalyzer,
-			trigger="date",
-			run_date=datetime.datetime.now(),
-			name='masterGeographicSentimentAnalyzer'
-		)
+		job = db_update_scheduler.get_job(event.job_id)
+		if job.name == 'masterUpdateMethod':
+			db_update_scheduler.add_job(
+				func=masterUpdateMethod,
+				trigger="date",
+				run_date=datetime.datetime.now(),
+				name='masterUpdateMethod'
+			)
+		else:
+			db_update_scheduler.add_job(
+				func=masterGeographicSentimentAnalyzer,
+				trigger="date",
+				run_date=datetime.datetime.now(),
+				name='masterGeographicSentimentAnalyzer'
+			)
 
 db_update_scheduler.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
 # db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
