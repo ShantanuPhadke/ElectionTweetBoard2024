@@ -6,6 +6,7 @@ from flask_cors import CORS
 import datetime
 import atexit
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
 
 from electiontweetboard.tokenizers.tokenizer_utils import tokenizer_minify
 
@@ -59,11 +60,19 @@ def masterUpdateMethod():
     # The rest of the stuff the Frontend / UI should take care of.
     # tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')
 
+
+
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
 db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now())
-# It'll be scheduled once every hour
-db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
+# Start the next instance of the job once the current instance completes
+def my_listener(event):
+	if event.exception:
+		print('The job has crashed')
+	else:
+		db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now())
+db_update_scheduler.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
+# db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
 # Shut down the scheduler when exiting the app
 atexit.register(lambda: db_update_scheduler.shutdown())
 # Explicitly starting the job in the background thread
