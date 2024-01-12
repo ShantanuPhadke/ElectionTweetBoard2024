@@ -89,9 +89,10 @@ def masterGeographicSentimentAnalyzer():
 					except Exception as e:
 						continue
 			num_total = num_positive + num_negative + num_neutral
-			commands.loadStateSentimentDistribution(
-				politician, state, num_negative/num_total, num_neutral/num_total, num_positive/num_total
-			)
+			with app.app_context():
+				commands.loadStateSentimentDistribution(
+					politician, state, num_negative/num_total, num_neutral/num_total, num_positive/num_total
+				)
 			
 
 db_update_scheduler = BackgroundScheduler()
