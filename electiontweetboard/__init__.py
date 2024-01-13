@@ -97,7 +97,7 @@ def masterGeographicSentimentAnalyzer():
 
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
-db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod')
+db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod', id='masterUpdateMethod')
 #db_update_scheduler.add_job(func=masterGeographicSentimentAnalyzer,trigger="date", run_date=datetime.datetime.now(), name='masterGeographicSentimentAnalyzer')
 # Start the next instance of the job once the current instance completes
 def my_listener(event):
@@ -105,28 +105,32 @@ def my_listener(event):
 		print('The job has crashed')
 	else:
 		job = db_update_scheduler.get_job(event.job_id)
-		if job:
-			if job.name == 'masterUpdateMethod':
-				db_update_scheduler.add_job(
-					func=masterGeographicSentimentAnalyzer,
-					trigger="date",
-					run_date=datetime.datetime.now(),
-					name='masterGeographicSentimentAnalyzer'
-				)
-			else:
-				db_update_scheduler.add_job(
-					func=masterUpdateMethod,
-					trigger="date",
-					run_date=datetime.datetime.now(),
-					name='masterUpdateMethod'
-				)
+		if job.name == 'masterUpdateMethod':
+			db_update_scheduler.add_job(
+				func=masterGeographicSentimentAnalyzer,
+				trigger="date",
+				run_date=datetime.datetime.now(),
+				name='masterGeographicSentimentAnalyzer',
+				id='masterGeographicSentimentAnalyzer'
+			)
 		else:
 			db_update_scheduler.add_job(
 				func=masterUpdateMethod,
 				trigger="date",
 				run_date=datetime.datetime.now(),
-				name='masterUpdateMethod'
+				name='masterUpdateMethod',
+				id='masterUpdateMethod'
 			)
+		'''
+		else:
+			db_update_scheduler.add_job(
+				func=masterUpdateMethod,
+				trigger="date",
+				run_date=datetime.datetime.now(),
+				name='masterUpdateMethod',
+				id='masterUpdateMethod'
+			)
+		'''
 
 db_update_scheduler.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
 # db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
