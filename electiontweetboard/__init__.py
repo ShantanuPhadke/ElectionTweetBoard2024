@@ -105,13 +105,21 @@ def my_listener(event):
 		print('The job has crashed')
 	else:
 		job = db_update_scheduler.get_job(event.job_id)
-		if job.name == 'masterUpdateMethod':
-			db_update_scheduler.add_job(
-				func=masterGeographicSentimentAnalyzer,
-				trigger="date",
-				run_date=datetime.datetime.now(),
-				name='masterGeographicSentimentAnalyzer'
-			)
+		if job:
+			if job.name == 'masterUpdateMethod':
+				db_update_scheduler.add_job(
+					func=masterGeographicSentimentAnalyzer,
+					trigger="date",
+					run_date=datetime.datetime.now(),
+					name='masterGeographicSentimentAnalyzer'
+				)
+			else:
+				db_update_scheduler.add_job(
+					func=masterUpdateMethod,
+					trigger="date",
+					run_date=datetime.datetime.now(),
+					name='masterUpdateMethod'
+				)
 		else:
 			db_update_scheduler.add_job(
 				func=masterUpdateMethod,
