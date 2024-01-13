@@ -2,7 +2,7 @@ import flask
 from flask import jsonify
 
 from electiontweetboard import app
-from electiontweetboard.models import Tweet, SentimentDistribution, SentimentsOverTime, QuickLink
+from electiontweetboard.models import Tweet, SentimentDistribution, SentimentsOverTime, QuickLink, StateSentiment
 
 from collections import Counter
 
@@ -275,3 +275,14 @@ def getCurrentLinks(query_term):
 	# from our list (it is likely spammy)
 
 	return jsonify(links=most_common_links)
+
+@app.route('/get_all_state_sentiments/<query_string>')
+def getAllStateSentiments(query_string):
+	all_state_scores = {}
+	state_sentiments = StateSentiment.query.filter_by(query_term=query_string).all()
+	print("State Sentiments Found: " + str(state_sentiments))
+	for state_sentiment in state_sentiments:
+		state_sentiment = state_sentiment
+		state_score = state_sentiment.positive_percent + state_sentiment.neutral_percent
+		all_state_scores[state_sentiment.state_symbol] = state_score
+	return jsonify(state_scores=all_state_scores)
