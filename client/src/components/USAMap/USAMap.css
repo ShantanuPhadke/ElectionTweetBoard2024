@@ -48,12 +48,21 @@
     }
 }
 
-@media only screen and (min-width: 1367px){
+@media only screen and (min-width: 1367px) {
+    .svgClass{
+        display: inline-block;
+        position: relative;
+        bottom: 15%;
+        height: 75%;
+    }
+}
+
+/*@media only screen and (min-width: 1521px) {
     .svgClass{
         display: inline-block;
         position: relative;
     }
-}
+}*/
 
 /* iPad, iPad Pro landscape */
 @media only screen and (min-height: 768px) and (orientation: landscape){
