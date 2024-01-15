@@ -112,7 +112,7 @@ def my_listener(event):
 			id='masterUpdateMethod'
 		)
 
-# db_update_scheduler.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
+db_update_scheduler.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
 # db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
 # Shut down the scheduler when exiting the app
 atexit.register(lambda: db_update_scheduler.shutdown())
