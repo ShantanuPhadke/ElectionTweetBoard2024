@@ -63,37 +63,37 @@ def masterGeographicSentimentAnalyzer():
 				)
 
 def masterUpdateMethod():
-    # Every hour lets say, do the following:
-    # (1) Getting the list of politicians
-    politicians = [
-        'Joe Biden', 'Marianne Williamson', 'Dean Phillips',
-        'Donald Trump', 'Nikki Haley', 'Vivek Ramaswamy', 'Asa Hutchinson',
-        'Ron DeSantis', 'Chris Christie'
-    ]
+	# Every hour lets say, do the following:
+	# (1) Getting the list of politicians
+	politicians = [
+		'Joe Biden', 'Marianne Williamson', 'Dean Phillips',
+		'Donald Trump', 'Nikki Haley', 'Vivek Ramaswamy', 'Asa Hutchinson',
+		'Ron DeSantis', 'Chris Christie'
+	]
 
-    # (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
-    all_politician_sentiment_data = {}
-    for politician in politicians:
-        tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
-        all_politician_sentiment_data[politician] = []
-        for tweet in tweets:
-            try:
-                sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
-                # print('Politician = ' + politician + ', Tweet = ' + tweet['text'] + ', Sentiment = ' + sentiment)
-                all_politician_sentiment_data[politician].append({
-                    'tweet': tweet['text'], 'sentiment': sentiment
-                })
-            except Exception as e:
-                print(e)
-                continue
-        print('politician = ' + politician + ', all_politician_sentiment_data[politician] = ' + str(all_politician_sentiment_data[politician]))
-    # (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
-    # object made above.
-    with app.app_context():
-        commands.loadAllSentimentDistributions(all_politician_sentiment_data)
-		masterGeographicSentimentAnalyzer()	
-    # The rest of the stuff the Frontend / UI should take care of.
-    # tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')	
+	# (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
+	all_politician_sentiment_data = {}
+	for politician in politicians:
+		tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
+		all_politician_sentiment_data[politician] = []
+		for tweet in tweets:
+			try:
+				sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
+				# print('Politician = ' + politician + ', Tweet = ' + tweet['text'] + ', Sentiment = ' + sentiment)
+				all_politician_sentiment_data[politician].append({
+					'tweet': tweet['text'], 'sentiment': sentiment
+				})
+			except Exception as e:
+				print(e)
+				continue
+		print('politician = ' + politician + ', all_politician_sentiment_data[politician] = ' + str(all_politician_sentiment_data[politician]))
+	# (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
+	# object made above.
+	with app.app_context():
+		commands.loadAllSentimentDistributions(all_politician_sentiment_data)
+	masterGeographicSentimentAnalyzer()	
+	# The rest of the stuff the Frontend / UI should take care of.
+	# tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')	
 
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
