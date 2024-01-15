@@ -34,6 +34,34 @@ my_sentiment_analyzer = SentimentAnalyzer.getInstance()
 my_location_manager = LocationManager.getInstance()
 my_politician_manager = PoliticianManager.getInstance()
 
+def masterGeographicSentimentAnalyzer():
+	all_states_info = my_location_manager.getAllStatesInfo()
+	all_politicians = my_politician_manager.getPoliticians()
+	for politician in all_politicians:
+		for state in all_states_info:
+			num_positive = 0.0
+			num_negative = 0.0
+			num_neutral = 0.0
+			for city in all_states_info[state]:
+				current_city_info = all_states_info[state][city]
+				tweets =  my_twitter_scraper.getTweetsForQuery(politician, 10, current_city_info)
+				for tweet in tweets:
+					try:
+						sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
+						if sentiment == 'Positive':
+							num_positive += 1
+						elif sentiment == 'Negative':
+							num_negative += 1
+						else:
+							num_neutral += 1
+					except Exception as e:
+						continue
+			num_total = num_positive + num_negative + num_neutral
+			with app.app_context():
+				commands.loadStateSentimentDistribution(
+					politician, state, (num_negative/num_total)*100, (num_neutral/num_total)*100, (num_positive/num_total)*100
+				)
+
 def masterUpdateMethod():
     # Every hour lets say, do the following:
     # (1) Getting the list of politicians
@@ -65,36 +93,7 @@ def masterUpdateMethod():
         commands.loadAllSentimentDistributions(all_politician_sentiment_data)
     # The rest of the stuff the Frontend / UI should take care of.
     # tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')
-	masterGeographicSentimentAnalyzer()
-
-def masterGeographicSentimentAnalyzer():
-	all_states_info = my_location_manager.getAllStatesInfo()
-	all_politicians = my_politician_manager.getPoliticians()
-	for politician in all_politicians:
-		for state in all_states_info:
-			num_positive = 0.0
-			num_negative = 0.0
-			num_neutral = 0.0
-			for city in all_states_info[state]:
-				current_city_info = all_states_info[state][city]
-				tweets =  my_twitter_scraper.getTweetsForQuery(politician, 10, current_city_info)
-				for tweet in tweets:
-					try:
-						sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
-						if sentiment == 'Positive':
-							num_positive += 1
-						elif sentiment == 'Negative':
-							num_negative += 1
-						else:
-							num_neutral += 1
-					except Exception as e:
-						continue
-			num_total = num_positive + num_negative + num_neutral
-			with app.app_context():
-				commands.loadStateSentimentDistribution(
-					politician, state, (num_negative/num_total)*100, (num_neutral/num_total)*100, (num_positive/num_total)*100
-				)
-			
+	masterGeographicSentimentAnalyzer()		
 
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
