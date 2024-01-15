@@ -91,7 +91,7 @@ def masterUpdateMethod():
 	# object made above.
 	with app.app_context():
 		commands.loadAllSentimentDistributions(all_politician_sentiment_data)
-	# masterGeographicSentimentAnalyzer()	
+	masterGeographicSentimentAnalyzer()	
 	# The rest of the stuff the Frontend / UI should take care of.
 	# tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')	
 
