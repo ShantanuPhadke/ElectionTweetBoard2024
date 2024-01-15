@@ -65,6 +65,7 @@ def masterUpdateMethod():
         commands.loadAllSentimentDistributions(all_politician_sentiment_data)
     # The rest of the stuff the Frontend / UI should take care of.
     # tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')
+	masterGeographicSentimentAnalyzer()
 
 def masterGeographicSentimentAnalyzer():
 	all_states_info = my_location_manager.getAllStatesInfo()
@@ -97,40 +98,20 @@ def masterGeographicSentimentAnalyzer():
 
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
-# db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod', id='masterUpdateMethod')
-db_update_scheduler.add_job(func=masterGeographicSentimentAnalyzer,trigger="date", run_date=datetime.datetime.now(), name='masterGeographicSentimentAnalyzer')
+db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod', id='masterUpdateMethod')
+# db_update_scheduler.add_job(func=masterGeographicSentimentAnalyzer,trigger="date", run_date=datetime.datetime.now(), name='masterGeographicSentimentAnalyzer')
 # Start the next instance of the job once the current instance completes
 def my_listener(event):
 	if event.exception:
 		print('The job has crashed')
 	else:
-		job = db_update_scheduler.get_job(event.job_id)
-		if job.name == 'masterUpdateMethod':
-			db_update_scheduler.add_job(
-				func=masterGeographicSentimentAnalyzer,
-				trigger="date",
-				run_date=datetime.datetime.now(),
-				name='masterGeographicSentimentAnalyzer',
-				id='masterGeographicSentimentAnalyzer'
-			)
-		else:
-			db_update_scheduler.add_job(
-				func=masterUpdateMethod,
-				trigger="date",
-				run_date=datetime.datetime.now(),
-				name='masterUpdateMethod',
-				id='masterUpdateMethod'
-			)
-		'''
-		else:
-			db_update_scheduler.add_job(
-				func=masterUpdateMethod,
-				trigger="date",
-				run_date=datetime.datetime.now(),
-				name='masterUpdateMethod',
-				id='masterUpdateMethod'
-			)
-		'''
+		db_update_scheduler.add_job(
+			func=masterUpdateMethod,
+			trigger="date",
+			run_date=datetime.datetime.now(),
+			name='masterUpdateMethod',
+			id='masterUpdateMethod'
+		)
 
 # db_update_scheduler.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
 # db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
