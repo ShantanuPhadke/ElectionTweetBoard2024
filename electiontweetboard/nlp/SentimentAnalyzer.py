@@ -25,7 +25,7 @@ class SentimentAnalyzer:
 			project_dir = os.path.dirname(__file__)
 			# SentimentAnalyzer.tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "twitter-roberta-minified-15k/tokenizer.json"))
 			SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained('cardiffnlp/twitter-roberta-base-sentiment')
-			SentimentAnalyzer.tokenizer.model_max_length = 514
+			SentimentAnalyzer.tokenizer.model_max_length = 512
 			SentimentAnalyzer.tokenizer.padding = 'max_length'
 			SentimentAnalyzer.tokenizer.truncation = True
 	
@@ -48,7 +48,7 @@ class SentimentAnalyzer:
 		# tokenizer = AutoTokenizer.from_pretrained(roberta)
 		labels = ['Negative', 'Neutral', 'Positive']
 		# actual sentiment analysis
-		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt')
+		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', max_length=512)
 		# print('encoded_tweet = ' + str(encoded_tweet))
 		output = model(**encoded_tweet)
 		scores = output[0][0].detach().numpy()
