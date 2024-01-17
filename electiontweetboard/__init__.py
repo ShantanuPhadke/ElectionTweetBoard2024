@@ -72,8 +72,8 @@ def masterUpdateMethod():
 	]
 
 	# (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
-	all_politician_sentiment_data = {}
 	for politician in politicians:
+		all_politician_sentiment_data = {}
 		tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
 		all_politician_sentiment_data[politician] = []
 		for tweet in tweets:
@@ -87,10 +87,11 @@ def masterUpdateMethod():
 				print(e)
 				continue
 		print('politician = ' + politician + ', all_politician_sentiment_data[politician] = ' + str(all_politician_sentiment_data[politician]))
-	# (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
-	# object made above.
-	with app.app_context():
-		commands.loadAllSentimentDistributions(all_politician_sentiment_data)
+		# (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
+		# object made above. 
+		# [01-16-24] Changed to only wiriting a single politician's data to the DB at one time to optimize for memory usage.
+		with app.app_context():
+			commands.loadAllSentimentDistributions(all_politician_sentiment_data)
 	masterGeographicSentimentAnalyzer()	
 	# The rest of the stuff the Frontend / UI should take care of.
 	# tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')	
