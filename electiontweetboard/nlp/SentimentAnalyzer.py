@@ -24,8 +24,12 @@ class SentimentAnalyzer:
 			SentimentAnalyzer._instance = self
 			project_dir = os.path.dirname(__file__)
 			# SentimentAnalyzer.tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "twitter-roberta-minified-15k/tokenizer.json"))
-			SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained('cardiffnlp/twitter-roberta-base-sentiment')
-			SentimentAnalyzer.absa_tokenizer = AutoTokenizer.from_pretrained("yangheng/deberta-v3-base-absa-v1.1", use_fast=False)
+			roberta = "cardiffnlp/twitter-roberta-base-sentiment"
+			absa = "yangheng/deberta-v3-base-absa-v1.1"
+			SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained(roberta)
+			SentimentAnalyzer.absa_tokenizer = AutoTokenizer.from_pretrained(absa, use_fast=False)
+			SentimentAnalyzer.roberta_model = AutoModelForSequenceClassification.from_pretrained(roberta, low_cpu_mem_usage=True)
+			SentimentAnalyzer.absa_model = AutoModelForSequenceClassification.from_pretrained(absa, low_cpu_mem_usage=True)
 			SentimentAnalyzer.tokenizer.model_max_length = 512
 			SentimentAnalyzer.tokenizer.padding = 'max_length'
 			SentimentAnalyzer.tokenizer.truncation = True
@@ -44,13 +48,11 @@ class SentimentAnalyzer:
 
 		tweet_processed = ' '.join(tweet_words)
 		# print('tweet_processed = ' + str(tweet_processed))
-		roberta = "cardiffnlp/twitter-roberta-base-sentiment"
-		absa = "yangheng/deberta-v3-base-absa-v1.1"
-		model = AutoModelForSequenceClassification.from_pretrained(roberta, low_cpu_mem_usage=True)
+		model = SentimentAnalyzer.roberta_model
 		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
 		if SentimentAnalyzer.query_term in tweet:
 			print("Using ABSA! SentimentAnalyzer.query_term = " + SentimentAnalyzer.query_term)
-			model = AutoModelForSequenceClassification.from_pretrained(absa, low_cpu_mem_usage=True)
+			model = SentimentAnalyzer.absa_model
 			encoded_tweet = SentimentAnalyzer.absa_tokenizer(tweet_processed, SentimentAnalyzer.query_term, return_tensors='pt', truncation=True, max_length=512)
 		else:
 			print("Using Normal!")
