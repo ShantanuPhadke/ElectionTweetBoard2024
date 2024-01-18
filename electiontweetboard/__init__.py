@@ -68,7 +68,7 @@ def getLastProcessedPolitician():
 	with app.app_context():
 		# Go to the database, order the tweets on some created column, and
 		# return the associated politician for that entry.
-		last_tweet = Tweet.query.order_by(SentimentsOverTime.id.desc()).limit(1).first()
+		last_tweet = Tweet.query.order_by(Tweet.id.desc()).limit(1).first()
 		last_politician_processed = last_tweet.query_term
 		return last_politician_processed
 
