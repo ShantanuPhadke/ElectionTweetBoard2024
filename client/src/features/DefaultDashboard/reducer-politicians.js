@@ -73,7 +73,7 @@ const politicianReducer = (state, action) => {
                     "imageHeight": action.dim,
                     "imageWidth": action.dim,
                     "linkSrc": "https://commons.wikimedia.org/wiki/File:Vivek_Ramaswamy_by_Gage_Skidmore.jpg",
-                    "linkSrcExtraInfo": "Gage Skidmore from Surprise, AZ, United States of America",
+                    "linkSrcExtraInfo": "Gage Skidmore",
                     "runningStatus": false,
                     "dropOutDate": "January 15, 2024"
                 },
@@ -109,7 +109,7 @@ const politicianReducer = (state, action) => {
                     "imageHeight": action.dim,
                     "imageWidth": action.dim,
                     "linkSrc": "https://commons.wikimedia.org/wiki/File:Chris_Christie_(53297980082)_(cropped).jpg",
-                    "linkSrcExtraInfo": "Gage Skidmore from Surprise, AZ, United States of America",
+                    "linkSrcExtraInfo": "Gage Skidmore",
                     "runningStatus": false,
                     "dropOutDate": "January 10, 2024"
                 }
