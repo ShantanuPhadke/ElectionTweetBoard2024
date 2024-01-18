@@ -22,7 +22,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from electiontweetboard import routes, commands
-from electiontweetboard.models import SentimentsOverTime
+from electiontweetboard.models import Tweet
 # Our TwitterConnection and VaderWrapper Singletons of course
 from electiontweetboard.data.TwitterScraper import TwitterScraper
 from electiontweetboard.nlp.SentimentAnalyzer import SentimentAnalyzer
@@ -68,8 +68,8 @@ def getLastProcessedPolitician():
 	with app.app_context():
 		# Go to the database, order the tweets on some created column, and
 		# return the associated politician for that entry.
-		last_sentiment_over_time = SentimentsOverTime.query.order_by(SentimentsOverTime.id.desc()).limit(1).first()
-		last_politician_processed = last_sentiment_over_time.query_term
+		last_tweet = Tweet.query.order_by(SentimentsOverTime.id.desc()).limit(1).first()
+		last_politician_processed = last_tweet.query_term
 		return last_politician_processed
 
 def masterUpdateMethod():
