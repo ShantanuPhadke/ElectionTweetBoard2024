@@ -25,12 +25,13 @@ class SentimentAnalyzer:
 			project_dir = os.path.dirname(__file__)
 			# SentimentAnalyzer.tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "twitter-roberta-minified-15k/tokenizer.json"))
 			SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained('cardiffnlp/twitter-roberta-base-sentiment')
+			SentimentAnalyzer.absa_tokenizer = AutoTokenizer.from_pretrained("yangheng/deberta-v3-base-absa-v1.1", use_fast=False)
 			SentimentAnalyzer.tokenizer.model_max_length = 512
 			SentimentAnalyzer.tokenizer.padding = 'max_length'
 			SentimentAnalyzer.tokenizer.truncation = True
 	
 	def setQueryTerm(self, query_term):
-		self.query_term = query_term
+		SentimentAnalyzer.query_term = query_term
 
 	def getSentimentForTweet(self, tweet):
 		tweet_words = []
@@ -44,15 +45,22 @@ class SentimentAnalyzer:
 		tweet_processed = ' '.join(tweet_words)
 		# print('tweet_processed = ' + str(tweet_processed))
 		roberta = "cardiffnlp/twitter-roberta-base-sentiment"
+		absa = "yangheng/deberta-v3-base-absa-v1.1"
 		model = AutoModelForSequenceClassification.from_pretrained(roberta, low_cpu_mem_usage=True)
+		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
+		if SentimentAnalyzer.query_term in tweet:
+			print("Using ABSA! SentimentAnalyzer.query_term = " + SentimentAnalyzer.query_term)
+			model = AutoModelForSequenceClassification.from_pretrained(absa, low_cpu_mem_usage=True)
+			encoded_tweet = SentimentAnalyzer.absa_tokenizer(tweet_processed, SentimentAnalyzer.query_term, return_tensors='pt', truncation=True, max_length=512)
+		else:
+			print("Using Normal!")
 		# tokenizer = AutoTokenizer.from_pretrained(roberta)
 		labels = ['Negative', 'Neutral', 'Positive']
-		# actual sentiment analysis
-		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
 		# print('encoded_tweet = ' + str(encoded_tweet))
 		output = model(**encoded_tweet)
 		scores = output[0][0].detach().numpy()
 		scores = softmax(scores)
+		print("tweet_processed = " + str(tweet_processed) + ", scores = " + str(scores) + ", labels = " + str(labels))
 		# print('scores = ' + str(scores))
 		max_score = 0
 		max_score_label = None

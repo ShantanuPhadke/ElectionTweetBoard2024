@@ -20,12 +20,14 @@ class TwitterScraper:
 			raise Exception("Derp de Herp Herp! TwitterScraper is a singleton mate!")
 		else:
 			TwitterScraper._instance = self
-			TwitterScraper.scraper = Nitter()
+			TwitterScraper.scraper = None
 
 	def getTweetsForQuery(self, query_string, number_tweets, near=None):
+		if not TwitterScraper.scraper:
+			TwitterScraper.scraper = Nitter()
 		while True:
 			try:
-				search_results = TwitterScraper.scraper.get_tweets(query_string, mode='term', number=number_tweets, near=near)
+				search_results = TwitterScraper.scraper.get_tweets(query_string, mode='term', number=number_tweets, near=near, language='en')
 				if len(search_results['tweets']) > 0:
 					break
 				else:

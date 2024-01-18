@@ -26,6 +26,14 @@ def myIndexDemocratsQuickLinksModal(candidate_name):
 def myIndexRepublicansQuickLinksModal(candidate_name):
 	return flask.render_template("index.html", token="Hello Flask+React")
 
+@app.route("/democrats/<candidate_name>/tweets-modal")
+def myIndexDemocratsTweetsModal(candidate_name):
+	return flask.render_template("index.html", token="Hello Flask+React")
+
+@app.route("/republican/<candidate_name>/tweets-modal")
+def myIndexRepublicansTweetsModal(candidate_name):
+	return flask.render_template("index.html", token="Hello Flask+React")
+
 @app.route("/democrats/<candidate_name>/tweets-modal/sample-tweets")
 def myIndexDemocratsTweetsModalSampleTweets(candidate_name):
 	return flask.render_template("index.html", token="Hello Flask+React")

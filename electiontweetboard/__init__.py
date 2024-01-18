@@ -38,6 +38,7 @@ def masterGeographicSentimentAnalyzer():
 	all_states_info = my_location_manager.getAllStatesInfo()
 	all_politicians = my_politician_manager.getPoliticians()
 	for politician in all_politicians:
+		my_sentiment_analyzer.setQueryTerm(politician)
 		for state in all_states_info:
 			num_positive = 0.0
 			num_negative = 0.0
@@ -73,6 +74,7 @@ def masterUpdateMethod():
 
 	# (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
 	for politician in politicians:
+		my_sentiment_analyzer.setQueryTerm(politician)
 		all_politician_sentiment_data = {}
 		tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
 		all_politician_sentiment_data[politician] = []
