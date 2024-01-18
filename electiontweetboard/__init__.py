@@ -15,13 +15,14 @@ app = Flask(__name__)
 CORS(app, origins=['http://localhost:3000'])
 app.config['SECRET_KEY'] = 'secret_key'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://snwmumshcsdhgd:63d1821b97e3e24111e9d36e496538ea0147c55db5ad52f5a7ed6357a8196c3d@ec2-3-217-146-37.compute-1.amazonaws.com:5432/dv41rc55lk3kl';
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///prod.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dev.db'
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from electiontweetboard import routes, commands
+from electiontweetboard.models import SentimentsOverTime
 # Our TwitterConnection and VaderWrapper Singletons of course
 from electiontweetboard.data.TwitterScraper import TwitterScraper
 from electiontweetboard.nlp.SentimentAnalyzer import SentimentAnalyzer
@@ -63,6 +64,14 @@ def masterGeographicSentimentAnalyzer():
 					politician, state, (num_negative/num_total)*100, (num_neutral/num_total)*100, (num_positive/num_total)*100
 				)
 
+def getLastProcessedPolitician():
+	with app.app_context():
+		# Go to the database, order the tweets on some created column, and
+		# return the associated politician for that entry.
+		last_sentiment_over_time = SentimentsOverTime.query.order_by(SentimentsOverTime.id.desc()).limit(1).first()
+		last_politician_processed = last_sentiment_over_time.query_term
+		return last_politician_processed
+
 def masterUpdateMethod():
 	# Every hour lets say, do the following:
 	# (1) Getting the list of politicians
@@ -72,8 +81,11 @@ def masterUpdateMethod():
 		'Ron DeSantis', 'Chris Christie'
 	]
 
+	last_politician_processed = getLastProcessedPolitician()
+	last_politician_processed_index = politicians.index(last_politician_processed)
+
 	# (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
-	for politician in politicians:
+	for politician in politicians[last_politician_processed_index+1:]:
 		my_sentiment_analyzer.setQueryTerm(politician)
 		all_politician_sentiment_data = {}
 		tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
