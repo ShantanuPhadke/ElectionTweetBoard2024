@@ -50,12 +50,15 @@ class SentimentAnalyzer:
 		# print('tweet_processed = ' + str(tweet_processed))
 		model = SentimentAnalyzer.roberta_model
 		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
+		'''
 		if SentimentAnalyzer.query_term in tweet:
 			print("Using ABSA! SentimentAnalyzer.query_term = " + SentimentAnalyzer.query_term)
 			model = SentimentAnalyzer.absa_model
 			encoded_tweet = SentimentAnalyzer.absa_tokenizer(tweet_processed, SentimentAnalyzer.query_term, return_tensors='pt', truncation=True, max_length=512)
 		else:
 			print("Using Normal!")
+		'''
+
 		# tokenizer = AutoTokenizer.from_pretrained(roberta)
 		labels = ['Negative', 'Neutral', 'Positive']
 		# print('encoded_tweet = ' + str(encoded_tweet))
