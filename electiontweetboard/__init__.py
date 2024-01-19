@@ -82,10 +82,10 @@ def masterUpdateMethod():
 	]
 
 	last_politician_processed = getLastProcessedPolitician()
-	last_politician_processed_index = politicians.index(last_politician_processed)
+	last_politician_processed_index = (politicians.index(last_politician_processed) + 1) % len(politicians)
 
 	# (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
-	for politician in politicians[last_politician_processed_index+1:]:
+	for politician in politicians[last_politician_processed_index:]:
 		my_sentiment_analyzer.setQueryTerm(politician)
 		all_politician_sentiment_data = {}
 		tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
