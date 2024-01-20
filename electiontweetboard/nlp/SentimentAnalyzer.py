@@ -26,9 +26,9 @@ class SentimentAnalyzer:
 			# SentimentAnalyzer.tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "twitter-roberta-minified-15k/tokenizer.json"))
 			roberta = "cardiffnlp/twitter-roberta-base-sentiment"
 			absa = "yangheng/deberta-v3-base-absa-v1.1"
-			SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained(roberta)
+			#SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained(roberta)
 			SentimentAnalyzer.absa_tokenizer = AutoTokenizer.from_pretrained(absa, use_fast=False)
-			SentimentAnalyzer.roberta_model = AutoModelForSequenceClassification.from_pretrained(roberta, low_cpu_mem_usage=True)
+			#SentimentAnalyzer.roberta_model = AutoModelForSequenceClassification.from_pretrained(roberta, low_cpu_mem_usage=True)
 			SentimentAnalyzer.absa_model = AutoModelForSequenceClassification.from_pretrained(absa, low_cpu_mem_usage=True)
 			SentimentAnalyzer.tokenizer.model_max_length = 512
 			SentimentAnalyzer.tokenizer.padding = 'max_length'
@@ -48,10 +48,11 @@ class SentimentAnalyzer:
 
 		tweet_processed = ' '.join(tweet_words)
 
-		model = SentimentAnalyzer.roberta_model
-		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
+		#model = SentimentAnalyzer.roberta_model
+		#encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
 		# Testing if the tokenizer is causing the crashes for absa
-		encoded_tweet_absa = SentimentAnalyzer.absa_tokenizer(tweet_processed, SentimentAnalyzer.query_term, return_tensors='pt', truncation=True, max_length=512)
+		model = SentimentAnalyzer.absa_model
+		encoded_tweet = SentimentAnalyzer.absa_tokenizer(tweet_processed, SentimentAnalyzer.query_term, return_tensors='pt', truncation=True, max_length=512)
 		'''
 		if SentimentAnalyzer.query_term in tweet:
 			print("Using ABSA! SentimentAnalyzer.query_term = " + SentimentAnalyzer.query_term)
