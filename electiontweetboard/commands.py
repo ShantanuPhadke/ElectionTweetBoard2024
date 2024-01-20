@@ -112,13 +112,22 @@ def loadAllSentimentDistributions(all_politician_sentiment_data):
 
 		# 5. Delete the old data
 		for old_tweet in old_tweets:
-			Tweet.query.filter_by(id=old_tweet.id).delete()
+			try:
+				Tweet.query.filter_by(id=old_tweet.id).delete()
+			except Exception:
+				continue
 		db.session.commit()
 
 		for old_sentiment_distribution in old_sentiment_distributions:
-			SentimentDistribution.query.filter_by(id=old_sentiment_distribution.id).delete()
+			try:
+				SentimentDistribution.query.filter_by(id=old_sentiment_distribution.id).delete()
+			except Exception:
+				continue
 		db.session.commit()
 
 		for old_quick_link in old_quick_links:
-			QuickLink.query.filter_by(id=old_quick_link.id).delete()
+			try:
+				QuickLink.query.filter_by(id=old_quick_link.id).delete()
+			except Exception:
+				continue
 		db.session.commit()
