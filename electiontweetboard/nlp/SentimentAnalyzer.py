@@ -30,9 +30,6 @@ class SentimentAnalyzer:
 			SentimentAnalyzer.absa_tokenizer = AutoTokenizer.from_pretrained(absa, use_fast=False)
 			#SentimentAnalyzer.roberta_model = AutoModelForSequenceClassification.from_pretrained(roberta, low_cpu_mem_usage=True)
 			SentimentAnalyzer.absa_model = AutoModelForSequenceClassification.from_pretrained(absa, low_cpu_mem_usage=True)
-			SentimentAnalyzer.tokenizer.model_max_length = 512
-			SentimentAnalyzer.tokenizer.padding = 'max_length'
-			SentimentAnalyzer.tokenizer.truncation = True
 	
 	def setQueryTerm(self, query_term):
 		SentimentAnalyzer.query_term = query_term
