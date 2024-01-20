@@ -117,7 +117,7 @@ db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=dat
 # Start the next instance of the job once the current instance completes
 def my_listener(event):
 	if event.exception:
-		print('The job has crashed')
+		print('The job has crashed with exception = ' + str(event.exception))
 	else:
 		db_update_scheduler.add_job(
 			func=masterUpdateMethod,
