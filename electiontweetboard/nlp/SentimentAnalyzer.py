@@ -47,9 +47,11 @@ class SentimentAnalyzer:
 			tweet_words.append(word)
 
 		tweet_processed = ' '.join(tweet_words)
-		# print('tweet_processed = ' + str(tweet_processed))
+
 		model = SentimentAnalyzer.roberta_model
 		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
+		# Testing if the tokenizer is causing the crashes for absa
+		encoded_tweet_absa = SentimentAnalyzer.absa_tokenizer(tweet_processed, SentimentAnalyzer.query_term, return_tensors='pt', truncation=True, max_length=512)
 		'''
 		if SentimentAnalyzer.query_term in tweet:
 			print("Using ABSA! SentimentAnalyzer.query_term = " + SentimentAnalyzer.query_term)
