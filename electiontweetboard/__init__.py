@@ -63,6 +63,7 @@ def masterGeographicSentimentAnalyzer():
 				commands.loadStateSentimentDistribution(
 					politician, state, (num_negative/num_total)*100, (num_neutral/num_total)*100, (num_positive/num_total)*100
 				)
+			print('Finished loading ' + politician + "'s sentiments in state " + state)
 
 def getLastProcessedPolitician():
 	with app.app_context():
