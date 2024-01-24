@@ -106,8 +106,12 @@ def masterUpdateMethod():
 		# object made above. 
 		# [01-16-24] Changed to only wiriting a single politician's data to the DB at one time to optimize for memory usage.
 		with app.app_context():
+			print('[DEBUG] BEFORE CALL TO loadAllSentimentDistributions')
 			commands.loadAllSentimentDistributions(all_politician_sentiment_data)
-	masterGeographicSentimentAnalyzer()	
+			print('[DEBUG] AFTER CALL TO loadAllSentimentDistributions')
+	print('[DEBUG] BEFORE CALL TO masterGeographicSentimentAnalyzer')
+	masterGeographicSentimentAnalyzer()
+	print('[DEBUG] AFTER CALL TO masterGeographicSentimentAnalyzer')
 	# The rest of the stuff the Frontend / UI should take care of.
 	# tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')	
 
