@@ -59,10 +59,9 @@ def masterGeographicSentimentAnalyzer():
 					except Exception as e:
 						continue
 			num_total = num_positive + num_negative + num_neutral
-			with app.app_context():
-				commands.loadStateSentimentDistribution(
-					politician, state, (num_negative/num_total)*100, (num_neutral/num_total)*100, (num_positive/num_total)*100
-				)
+			commands.loadStateSentimentDistribution(
+				politician, state, (num_negative/num_total)*100, (num_neutral/num_total)*100, (num_positive/num_total)*100
+			)
 			print('Finished loading ' + politician + "'s sentiments in state " + state)
 
 def getLastProcessedPolitician():
@@ -74,46 +73,46 @@ def getLastProcessedPolitician():
 		return last_politician_processed
 
 def masterUpdateMethod():
-	# Every hour lets say, do the following:
-	# (1) Getting the list of politicians
-	politicians = [
-		'Joe Biden', 'Marianne Williamson', 'Dean Phillips',
-		'Donald Trump', 'Nikki Haley', 'Vivek Ramaswamy', 'Asa Hutchinson',
-		'Ron DeSantis', 'Chris Christie'
-	]
+	with app.app_context():
+		# Every hour lets say, do the following:
+		# (1) Getting the list of politicians
+		politicians = [
+			'Joe Biden', 'Marianne Williamson', 'Dean Phillips',
+			'Donald Trump', 'Nikki Haley', 'Vivek Ramaswamy', 'Asa Hutchinson',
+			'Ron DeSantis', 'Chris Christie'
+		]
 
-	last_politician_processed = getLastProcessedPolitician()
-	last_politician_processed_index = (politicians.index(last_politician_processed) + 1) % len(politicians)
+		last_politician_processed = getLastProcessedPolitician()
+		last_politician_processed_index = (politicians.index(last_politician_processed) + 1) % len(politicians)
 
-	# (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
-	for politician in politicians[last_politician_processed_index:]:
-		my_sentiment_analyzer.setQueryTerm(politician)
-		all_politician_sentiment_data = {}
-		tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
-		all_politician_sentiment_data[politician] = []
-		for tweet in tweets:
-			try:
-				sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
-				# print('Politician = ' + politician + ', Tweet = ' + tweet['text'] + ', Sentiment = ' + sentiment)
-				all_politician_sentiment_data[politician].append({
-					'tweet': tweet['text'], 'sentiment': sentiment
-				})
-			except Exception as e:
-				print(e)
-				continue
-		print('politician = ' + politician + ', all_politician_sentiment_data[politician] = ' + str(all_politician_sentiment_data[politician]))
-		# (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
-		# object made above. 
-		# [01-16-24] Changed to only wiriting a single politician's data to the DB at one time to optimize for memory usage.
-		with app.app_context():
+		# (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
+		for politician in politicians[last_politician_processed_index:]:
+			my_sentiment_analyzer.setQueryTerm(politician)
+			all_politician_sentiment_data = {}
+			tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
+			all_politician_sentiment_data[politician] = []
+			for tweet in tweets:
+				try:
+					sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
+					# print('Politician = ' + politician + ', Tweet = ' + tweet['text'] + ', Sentiment = ' + sentiment)
+					all_politician_sentiment_data[politician].append({
+						'tweet': tweet['text'], 'sentiment': sentiment
+					})
+				except Exception as e:
+					print(e)
+					continue
+			print('politician = ' + politician + ', all_politician_sentiment_data[politician] = ' + str(all_politician_sentiment_data[politician]))
+			# (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
+			# object made above. 
+			# [01-16-24] Changed to only wiriting a single politician's data to the DB at one time to optimize for memory usage.
 			print('[DEBUG] BEFORE CALL TO loadAllSentimentDistributions')
 			commands.loadAllSentimentDistributions(all_politician_sentiment_data)
 			print('[DEBUG] AFTER CALL TO loadAllSentimentDistributions')
-	print('[DEBUG] BEFORE CALL TO masterGeographicSentimentAnalyzer')
-	masterGeographicSentimentAnalyzer()
-	print('[DEBUG] AFTER CALL TO masterGeographicSentimentAnalyzer')
-	# The rest of the stuff the Frontend / UI should take care of.
-	# tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')	
+		print('[DEBUG] BEFORE CALL TO masterGeographicSentimentAnalyzer')
+		masterGeographicSentimentAnalyzer()
+		print('[DEBUG] AFTER CALL TO masterGeographicSentimentAnalyzer')
+		# The rest of the stuff the Frontend / UI should take care of.
+		# tokenizer_minify('cardiffnlp/twitter-roberta-base-sentiment', 15000, 'twitter-roberta-minified-15k')	
 
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
