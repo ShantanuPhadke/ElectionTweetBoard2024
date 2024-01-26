@@ -82,11 +82,11 @@ def masterUpdateMethod():
 			'Ron DeSantis', 'Chris Christie'
 		]
 
-		last_politician_processed = getLastProcessedPolitician()
-		last_politician_processed_index = (politicians.index(last_politician_processed) + 1) % len(politicians)
+		# last_politician_processed = getLastProcessedPolitician()
+		# last_politician_processed_index = (politicians.index(last_politician_processed) + 1) % len(politicians)
 
 		# (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
-		for politician in politicians[last_politician_processed_index:]:
+		for politician in politicians:
 			my_sentiment_analyzer.setQueryTerm(politician)
 			all_politician_sentiment_data = {}
 			tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
@@ -101,7 +101,6 @@ def masterUpdateMethod():
 				except Exception as e:
 					print(e)
 					continue
-			print('politician = ' + politician + ', all_politician_sentiment_data[politician] = ' + str(all_politician_sentiment_data[politician]))
 			# (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
 			# object made above. 
 			# [01-16-24] Changed to only wiriting a single politician's data to the DB at one time to optimize for memory usage.
