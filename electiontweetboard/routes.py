@@ -30,7 +30,7 @@ def myIndexRepublicansQuickLinksModal(candidate_name):
 def myIndexDemocratsTweetsModal(candidate_name):
 	return flask.render_template("index.html", token="Hello Flask+React")
 
-@app.route("/republican/<candidate_name>/tweets-modal")
+@app.route("/republicans/<candidate_name>/tweets-modal")
 def myIndexRepublicansTweetsModal(candidate_name):
 	return flask.render_template("index.html", token="Hello Flask+React")
 
@@ -288,7 +288,6 @@ def getCurrentLinks(query_term):
 def getAllStateSentiments(query_string):
 	all_state_scores = {}
 	state_sentiments = StateSentiment.query.filter_by(query_term=query_string).all()
-	print("State Sentiments Found: " + str(state_sentiments))
 	for state_sentiment in state_sentiments:
 		state_sentiment = state_sentiment
 		state_score = state_sentiment.positive_percent + state_sentiment.neutral_percent

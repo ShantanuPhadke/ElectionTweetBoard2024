@@ -23,7 +23,6 @@ class SentimentAnalyzer:
 		else:
 			SentimentAnalyzer._instance = self
 			project_dir = os.path.dirname(__file__)
-			# SentimentAnalyzer.tokenizer = PreTrainedTokenizerFast(tokenizer_file=os.path.join(project_dir, "twitter-roberta-minified-15k/tokenizer.json"))
 			roberta = "cardiffnlp/twitter-roberta-base-sentiment"
 			absa = "yangheng/deberta-v3-base-absa-v1.1"
 			SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained(roberta)
@@ -48,20 +47,13 @@ class SentimentAnalyzer:
 		model = SentimentAnalyzer.roberta_model
 		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
 		if SentimentAnalyzer.query_term in tweet:
-			print("Using ABSA! SentimentAnalyzer.query_term = " + SentimentAnalyzer.query_term)
 			model = SentimentAnalyzer.absa_model
 			encoded_tweet = SentimentAnalyzer.absa_tokenizer(tweet_processed, SentimentAnalyzer.query_term, return_tensors='pt', truncation=True, max_length=512)
-		else:
-			print("Using Normal!")
 
-		# tokenizer = AutoTokenizer.from_pretrained(roberta)
 		labels = ['Negative', 'Neutral', 'Positive']
-		# print('encoded_tweet = ' + str(encoded_tweet))
 		output = model(**encoded_tweet)
 		scores = output[0][0].detach().numpy()
 		scores = softmax(scores)
-		print("tweet_processed = " + str(tweet_processed) + ", scores = " + str(scores) + ", labels = " + str(labels))
-		# print('scores = ' + str(scores))
 		max_score = 0
 		max_score_label = None
 

@@ -55,25 +55,24 @@ def loadAllSentimentDistributions(all_politician_sentiment_data):
 				contains_politician_name = politician in tweet
 
 				# 2. Get the sentiment distributions (% Negative, % Neutral, % Positive) for the current politician.
-				if contains_politician_name:
-					if sentiment == 'Positive':
-						all_politician_sample_tweets_by_sentiment[politician]['positive_sentiment_tweets'].append(tweet)
-						if num_positive < num_sample_tweets:
-							tweet_obj = Tweet(tweet=tweet, query_term=politician, sentiment=sentiment)
-							db.session.add(tweet_obj)
-						num_positive += 1
-					elif sentiment == 'Neutral':
-						all_politician_sample_tweets_by_sentiment[politician]['neutral_sentiment_tweets'].append(tweet)
-						if num_neutral < num_sample_tweets:
-							tweet_obj = Tweet(tweet=tweet, query_term=politician, sentiment=sentiment)
-							db.session.add(tweet_obj)
-						num_neutral += 1
-					else:
-						all_politician_sample_tweets_by_sentiment[politician]['negative_sentiment_tweets'].append(tweet)
-						if num_negative < num_sample_tweets:
-							tweet_obj = Tweet(tweet=tweet, query_term=politician, sentiment=sentiment)
-							db.session.add(tweet_obj)
-						num_negative += 1
+				if sentiment == 'Positive':
+					all_politician_sample_tweets_by_sentiment[politician]['positive_sentiment_tweets'].append(tweet)
+					if contains_politician_name and num_positive < num_sample_tweets:
+						tweet_obj = Tweet(tweet=tweet, query_term=politician, sentiment=sentiment)
+						db.session.add(tweet_obj)
+					num_positive += 1
+				elif sentiment == 'Neutral':
+					all_politician_sample_tweets_by_sentiment[politician]['neutral_sentiment_tweets'].append(tweet)
+					if contains_politician_name and num_neutral < num_sample_tweets:
+						tweet_obj = Tweet(tweet=tweet, query_term=politician, sentiment=sentiment)
+						db.session.add(tweet_obj)
+					num_neutral += 1
+				else:
+					all_politician_sample_tweets_by_sentiment[politician]['negative_sentiment_tweets'].append(tweet)
+					if contains_politician_name and num_negative < num_sample_tweets:
+						tweet_obj = Tweet(tweet=tweet, query_term=politician, sentiment=sentiment)
+						db.session.add(tweet_obj)
+					num_negative += 1
 			
 				# 3. Loop through the relevant tweets + extract any relevant links
 				link = my_link_extractor.extract_link(tweet)
