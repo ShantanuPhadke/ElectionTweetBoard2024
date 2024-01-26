@@ -121,6 +121,13 @@ db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=dat
 def my_listener(event):
 	if event.exception:
 		print('The job has crashed with exception = ' + str(event.exception))
+		db_update_scheduler.add_job(
+			func=masterUpdateMethod,
+			trigger="date",
+			run_date=datetime.datetime.now(),
+			name='masterUpdateMethod',
+			id='masterUpdateMethod'
+		)
 	else:
 		db_update_scheduler.add_job(
 			func=masterUpdateMethod,
