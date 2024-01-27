@@ -117,7 +117,7 @@ def masterUpdateMethod():
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
 db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod', id='masterUpdateMethod')
-db_update_scheduler.add_job(func=masterGeographicSentimentAnalyzer,trigger="date", run_date=datetime.datetime.now(), name='masterGeographicSentimentAnalyzer', id='masterGeographicSentimentAnalyzer')
+# db_update_scheduler.add_job(func=masterGeographicSentimentAnalyzer,trigger="date", run_date=datetime.datetime.now(), name='masterGeographicSentimentAnalyzer', id='masterGeographicSentimentAnalyzer')
 # Start the next instance of the job once the current instance completes
 def my_listener_master_update(event):
 	if event.name == 'masterUpdateMethod':
@@ -160,7 +160,7 @@ def my_listener_master_geographic_sentiment_analyzer(event):
 			)
 
 db_update_scheduler.add_listener(my_listener_master_update, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
-db_update_scheduler.add_listener(my_listener_master_geographic_sentiment_analyzer, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
+# db_update_scheduler.add_listener(my_listener_master_geographic_sentiment_analyzer, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
 # db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
 # Shut down the scheduler when exiting the app
 atexit.register(lambda: db_update_scheduler.shutdown())
