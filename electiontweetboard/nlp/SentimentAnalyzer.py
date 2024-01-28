@@ -25,10 +25,10 @@ class SentimentAnalyzer:
 			project_dir = os.path.dirname(__file__)
 			roberta = "cardiffnlp/twitter-roberta-base-sentiment"
 			absa = "yangheng/deberta-v3-base-absa-v1.1"
-			SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained(roberta)
+			# SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained(roberta)
 			SentimentAnalyzer.absa_tokenizer = AutoTokenizer.from_pretrained(absa, use_fast=False)
 			# SentimentAnalyzer.roberta_model = AutoModelForSequenceClassification.from_pretrained(roberta, low_cpu_mem_usage=True)
-			# SentimentAnalyzer.absa_model = AutoModelForSequenceClassification.from_pretrained(absa, low_cpu_mem_usage=True)
+			SentimentAnalyzer.absa_model = AutoModelForSequenceClassification.from_pretrained(absa, low_cpu_mem_usage=True)
 	
 	def setQueryTerm(self, query_term):
 		SentimentAnalyzer.query_term = query_term
