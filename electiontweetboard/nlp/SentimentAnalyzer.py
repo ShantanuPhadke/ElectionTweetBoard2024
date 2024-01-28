@@ -27,8 +27,8 @@ class SentimentAnalyzer:
 			absa = "yangheng/deberta-v3-base-absa-v1.1"
 			SentimentAnalyzer.tokenizer = AutoTokenizer.from_pretrained(roberta)
 			SentimentAnalyzer.absa_tokenizer = AutoTokenizer.from_pretrained(absa, use_fast=False)
-			SentimentAnalyzer.roberta_model = AutoModelForSequenceClassification.from_pretrained(roberta, low_cpu_mem_usage=True)
-			SentimentAnalyzer.absa_model = AutoModelForSequenceClassification.from_pretrained(absa, low_cpu_mem_usage=True)
+			# SentimentAnalyzer.roberta_model = AutoModelForSequenceClassification.from_pretrained(roberta, low_cpu_mem_usage=True)
+			# SentimentAnalyzer.absa_model = AutoModelForSequenceClassification.from_pretrained(absa, low_cpu_mem_usage=True)
 	
 	def setQueryTerm(self, query_term):
 		SentimentAnalyzer.query_term = query_term
@@ -44,11 +44,11 @@ class SentimentAnalyzer:
 
 		tweet_processed = ' '.join(tweet_words)
 
-		model = SentimentAnalyzer.roberta_model
-		encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
-		if SentimentAnalyzer.query_term in tweet:
-			model = SentimentAnalyzer.absa_model
-			encoded_tweet = SentimentAnalyzer.absa_tokenizer(tweet_processed, SentimentAnalyzer.query_term, return_tensors='pt', truncation=True, max_length=512)
+		# model = SentimentAnalyzer.roberta_model
+		# encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
+		# if SentimentAnalyzer.query_term in tweet:
+		model = SentimentAnalyzer.absa_model
+		encoded_tweet = SentimentAnalyzer.absa_tokenizer(tweet_processed, SentimentAnalyzer.query_term, return_tensors='pt', truncation=True, max_length=512)
 
 		labels = ['Negative', 'Neutral', 'Positive']
 		output = model(**encoded_tweet)
