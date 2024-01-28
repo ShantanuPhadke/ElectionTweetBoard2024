@@ -105,9 +105,9 @@ def masterUpdateMethod():
 			# (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
 			# object made above. 
 			# [01-16-24] Changed to only wiriting a single politician's data to the DB at one time to optimize for memory usage.
-			print('[DEBUG] BEFORE CALL TO loadAllSentimentDistributions')
+			print('[DEBUG] BEFORE CALL TO loadAllSentimentDistributions for politician = ' + politician)
 			commands.loadAllSentimentDistributions(all_politician_sentiment_data)
-			print('[DEBUG] AFTER CALL TO loadAllSentimentDistributions')
+			print('[DEBUG] AFTER CALL TO loadAllSentimentDistributions for politician = ' + politician)
 		# print('[DEBUG] BEFORE CALL TO masterGeographicSentimentAnalyzer')
 		# masterGeographicSentimentAnalyzer()
 		# print('[DEBUG] AFTER CALL TO masterGeographicSentimentAnalyzer')
