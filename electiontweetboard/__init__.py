@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 
 # For Background Scheduling
 import datetime
+import logging
 import atexit
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
@@ -180,3 +181,7 @@ db_update_scheduler.add_listener(my_listener_master_update, EVENT_JOB_EXECUTED |
 # 01-10-24: Moving scheduler.start() to the bottom of __init__.py according to
 # https://github.com/viniciuschiele/flask-apscheduler/issues/147
 db_update_scheduler.start()
+
+# Adding logging to find out wtf is going on with the frozen jobs
+logging.basicConfig()
+logging.getLogger('apscheduler').setLevel(logging.DEBUG)
