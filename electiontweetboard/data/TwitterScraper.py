@@ -26,6 +26,7 @@ class TwitterScraper:
 		if not TwitterScraper.scraper:
 			TwitterScraper.scraper = Nitter()
 		while True:
+			print('IM IN THE LOOP!')
 			try:
 				search_results = TwitterScraper.scraper.get_tweets(query_string, mode='term', number=number_tweets, near=near, language='en')
 				if len(search_results['tweets']) > 0:
@@ -35,6 +36,5 @@ class TwitterScraper:
 			except Exception as e:
 				print('\nException encountered in TwitterScraper!! e = ' + str(e) + '\n')
 				continue
-			print('Im in the loop!')
 		return search_results['tweets']
 	
