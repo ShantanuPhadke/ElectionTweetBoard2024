@@ -32,7 +32,8 @@ class TwitterScraper:
 					break
 				else:
 					continue
-			except:
+			except Exception as e:
+				print('\nException encountered in TwitterScraper!! e = ' + str(e) + '\n')
 				continue
 		return search_results['tweets']
 	
