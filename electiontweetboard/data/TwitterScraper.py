@@ -29,6 +29,7 @@ class TwitterScraper:
 			print('IM IN THE LOOP!')
 			try:
 				search_results = TwitterScraper.scraper.get_tweets(query_string, mode='term', number=number_tweets, near=near, language='en')
+				print('search_results = ' + str(search_results))
 				if len(search_results['tweets']) > 0:
 					break
 				else:
