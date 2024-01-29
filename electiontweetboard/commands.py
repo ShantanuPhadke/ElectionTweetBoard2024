@@ -21,13 +21,13 @@ def loadStateSentimentDistribution(query_term, state_symbol, negative_percent, n
 		StateSentiment.query.filter_by(id=old_state_sentiment_distribution[0].id).delete()
 	db.session.commit()
 
-def loadAllSentimentDistributions(all_politician_sentiment_data):
-	all_politician_sentiment_distributions = {}
-	all_politician_tweets_by_sentiment = {}
-	all_politician_sample_tweets_by_sentiment = {}
+def loadAllSentimentDistributions(politician_sentiment_data):
+	politician_sentiment_distributions = {}
+	politician_tweets_by_sentiment = {}
+	politician_sample_tweets_by_sentiment = {}
 	num_sample_tweets = 12
 	# A. For each politician:
-	for politician in all_politician_sentiment_data:
+	for politician in politician_sentiment_data:
 		try:
 			# 1. Get the old data
 			old_tweets = Tweet.query.filter_by(query_term=politician).all()
@@ -35,13 +35,13 @@ def loadAllSentimentDistributions(all_politician_sentiment_data):
 			old_sentiments_over_times = SentimentsOverTime.query.filter_by(query_term=politician).all()
 			old_quick_links = QuickLink.query.filter_by(query_term=politician).all()
 
-			all_politician_sentiment_distributions[politician] = {
+			politician_sentiment_distributions[politician] = {
 				'negative_sentiment_percent': 0, 'positive_sentiment_percent': 0, 'neutral_sentiment_percent': 0,
 			}
-			all_politician_tweets_by_sentiment[politician] = {
+			politician_tweets_by_sentiment[politician] = {
 				'negative_sentiment_tweets': [], 'neutral_sentiment_tweets': [], 'positive_sentiment_tweets': [],
 			}
-			all_politician_sample_tweets_by_sentiment[politician] = {
+			politician_sample_tweets_by_sentiment[politician] = {
 				'negative_sentiment_tweets': [], 'neutral_sentiment_tweets': [], 'positive_sentiment_tweets': [],
 			}
 
@@ -49,26 +49,26 @@ def loadAllSentimentDistributions(all_politician_sentiment_data):
 			num_neutral = 0.0
 			num_negative = 0.0
 
-			for tweet_data in all_politician_sentiment_data[politician]:
+			for tweet_data in politician_sentiment_data[politician]:
 				tweet = tweet_data['tweet']
 				sentiment = tweet_data['sentiment']
 				contains_politician_name = politician in tweet
 
 				# 2. Get the sentiment distributions (% Negative, % Neutral, % Positive) for the current politician.
 				if sentiment == 'Positive':
-					all_politician_sample_tweets_by_sentiment[politician]['positive_sentiment_tweets'].append(tweet)
+					politician_sample_tweets_by_sentiment[politician]['positive_sentiment_tweets'].append(tweet)
 					if contains_politician_name and num_positive < num_sample_tweets:
 						tweet_obj = Tweet(tweet=tweet, query_term=politician, sentiment=sentiment)
 						db.session.add(tweet_obj)
 					num_positive += 1
 				elif sentiment == 'Neutral':
-					all_politician_sample_tweets_by_sentiment[politician]['neutral_sentiment_tweets'].append(tweet)
+					politician_sample_tweets_by_sentiment[politician]['neutral_sentiment_tweets'].append(tweet)
 					if contains_politician_name and num_neutral < num_sample_tweets:
 						tweet_obj = Tweet(tweet=tweet, query_term=politician, sentiment=sentiment)
 						db.session.add(tweet_obj)
 					num_neutral += 1
 				else:
-					all_politician_sample_tweets_by_sentiment[politician]['negative_sentiment_tweets'].append(tweet)
+					politician_sample_tweets_by_sentiment[politician]['negative_sentiment_tweets'].append(tweet)
 					if contains_politician_name and num_negative < num_sample_tweets:
 						tweet_obj = Tweet(tweet=tweet, query_term=politician, sentiment=sentiment)
 						db.session.add(tweet_obj)
@@ -86,7 +86,7 @@ def loadAllSentimentDistributions(all_politician_sentiment_data):
 			db.session.commit()
 
 			# 4. Update the SentimentsDistribution / SentimentsOverTime for the current politician.
-			num_total = len(all_politician_sentiment_data[politician])
+			num_total = len(politician_sentiment_data[politician])
 			sentiments_distribution_obj = SentimentDistribution(
 				query_term=politician,
 				positive_percent=(num_positive/num_total)*100,

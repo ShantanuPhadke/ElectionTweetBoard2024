@@ -73,41 +73,43 @@ def getLastProcessedPolitician():
 		last_politician_processed = last_tweet.query_term
 		return last_politician_processed
 
-def masterUpdateMethod():
+# Rearchitecture (01/29/24):
+# Do / process one of the politicians at a time.
+def masterUpdateMethod(politician):
 	with app.app_context():
 		# Every hour lets say, do the following:
 		# (1) Getting the list of politicians
-		politicians = [
-			'Joe Biden', 'Marianne Williamson', 'Dean Phillips',
-			'Donald Trump', 'Nikki Haley', 'Vivek Ramaswamy', 'Asa Hutchinson',
-			'Ron DeSantis', 'Chris Christie'
-		]
+		# politicians = [
+		#	'Joe Biden', 'Marianne Williamson', 'Dean Phillips',
+		#	'Donald Trump', 'Nikki Haley', 'Vivek Ramaswamy', 'Asa Hutchinson',
+		#	'Ron DeSantis', 'Chris Christie'
+		# ]
 
 		# last_politician_processed = getLastProcessedPolitician()
 		# last_politician_processed_index = (politicians.index(last_politician_processed) + 1) % len(politicians)
 
 		# (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
-		for politician in politicians:
-			my_sentiment_analyzer.setQueryTerm(politician)
-			all_politician_sentiment_data = {}
-			tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
-			all_politician_sentiment_data[politician] = []
-			for tweet in tweets:
-				try:
-					sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
-					# print('Politician = ' + politician + ', Tweet = ' + tweet['text'] + ', Sentiment = ' + sentiment)
-					all_politician_sentiment_data[politician].append({
-						'tweet': tweet['text'], 'sentiment': sentiment
-					})
-				except Exception as e:
-					print(e)
-					continue
-			# (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
-			# object made above. 
-			# [01-16-24] Changed to only wiriting a single politician's data to the DB at one time to optimize for memory usage.
-			print('[DEBUG] BEFORE CALL TO loadAllSentimentDistributions for politician = ' + politician)
-			commands.loadAllSentimentDistributions(all_politician_sentiment_data)
-			print('[DEBUG] AFTER CALL TO loadAllSentimentDistributions for politician = ' + politician)
+		# for politician in politicians:
+		my_sentiment_analyzer.setQueryTerm(politician)
+		politician_sentiment_data = {}
+		tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
+		politician_sentiment_data[politician] = []
+		for tweet in tweets:
+			try:
+				sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
+				# print('Politician = ' + politician + ', Tweet = ' + tweet['text'] + ', Sentiment = ' + sentiment)
+				politician_sentiment_data[politician].append({
+					'tweet': tweet['text'], 'sentiment': sentiment
+				})
+			except Exception as e:
+				print(e)
+				continue
+		# (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
+		# object made above. 
+		# [01-16-24] Changed to only wiriting a single politician's data to the DB at one time to optimize for memory usage.
+		print('[DEBUG] BEFORE CALL TO loadAllSentimentDistributions for politician = ' + politician)
+		commands.loadAllSentimentDistributions(politician_sentiment_data)
+		print('[DEBUG] AFTER CALL TO loadAllSentimentDistributions for politician = ' + politician)
 		# print('[DEBUG] BEFORE CALL TO masterGeographicSentimentAnalyzer')
 		# masterGeographicSentimentAnalyzer()
 		# print('[DEBUG] AFTER CALL TO masterGeographicSentimentAnalyzer')
@@ -116,28 +118,38 @@ def masterUpdateMethod():
 
 db_update_scheduler = BackgroundScheduler()
 # It'll be run once right away when the script is first started
-db_update_scheduler.add_job(func=masterUpdateMethod,trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod', id='masterUpdateMethod')
+politicians = [
+	'Joe Biden', 'Marianne Williamson', 'Dean Phillips',
+	'Donald Trump', 'Nikki Haley', 'Vivek Ramaswamy', 'Asa Hutchinson',
+	'Ron DeSantis', 'Chris Christie'
+]
+
+db_update_scheduler.add_job(func=masterUpdateMethod, args=[politicians[0]], trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod', id='masterUpdateMethod-' + politicians[0])
 # db_update_scheduler.add_job(func=masterGeographicSentimentAnalyzer,trigger="date", run_date=datetime.datetime.now(), name='masterGeographicSentimentAnalyzer', id='masterGeographicSentimentAnalyzer')
 # Start the next instance of the job once the current instance completes
-def my_listener_master_update(event):
-	if event.name == 'masterUpdateMethod':
-		if event.exception:
-			print('The job has crashed with exception = ' + str(event.exception))
-			db_update_scheduler.add_job(
-				func=masterUpdateMethod,
-				trigger="date",
-				run_date=datetime.datetime.now(),
-				name='masterUpdateMethod',
-				id='masterUpdateMethod'
-			)
-		else:
-			db_update_scheduler.add_job(
-				func=masterUpdateMethod,
-				trigger="date",
-				run_date=datetime.datetime.now(),
-				name='masterUpdateMethod',
-				id='masterUpdateMethod'
-			)
+def my_listener_master_update(event):	
+	if event.exception:
+		print('The job has crashed with exception = ' + str(event.exception))
+		db_update_scheduler.add_job(
+			func=masterUpdateMethod,
+			args=[politicians[0]],
+			trigger="date",
+			run_date=datetime.datetime.now(),
+			name='masterUpdateMethod',
+			id='masterUpdateMethod-' + politicians[0]
+		)
+	else:
+		processed_politician = event.job_id.split('-')[1]
+		print('\nprocessed_politician= ' + str(processed_politician) + '\n')
+		next_politician = politicians[(politicians.index(processed_politician) + 1) % len(politicians)]
+		db_update_scheduler.add_job(
+			func=masterUpdateMethod,
+			args=[next_politician],
+			trigger="date",
+			run_date=datetime.datetime.now(),
+			name='masterUpdateMethod',
+			id='masterUpdateMethod-' + next_politician
+		)
 
 def my_listener_master_geographic_sentiment_analyzer(event):
 	if event.name == 'masterGeographicSentimentAnalyzer':
@@ -163,9 +175,8 @@ db_update_scheduler.add_listener(my_listener_master_update, EVENT_JOB_EXECUTED |
 # db_update_scheduler.add_listener(my_listener_master_geographic_sentiment_analyzer, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
 # db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
 # Shut down the scheduler when exiting the app
-atexit.register(lambda: db_update_scheduler.shutdown())
+# atexit.register(lambda: db_update_scheduler.shutdown())
 # Explicitly starting the job in the background thread
 # 01-10-24: Moving scheduler.start() to the bottom of __init__.py according to
 # https://github.com/viniciuschiele/flask-apscheduler/issues/147
-if not db_update_scheduler.running:
-	db_update_scheduler.start()
+db_update_scheduler.start()
