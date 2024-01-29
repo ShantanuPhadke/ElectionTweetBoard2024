@@ -42,7 +42,7 @@ class SentimentAnalyzer:
 				word = 'http'
 			tweet_words.append(word)
 
-		tweet_processed = ' '.join(tweet_words)
+		tweet_processed = ' '.join(tweet_words)[:512]
 
 		# model = SentimentAnalyzer.roberta_model
 		# encoded_tweet = SentimentAnalyzer.tokenizer(tweet_processed, return_tensors='pt', truncation=True, max_length=512)
