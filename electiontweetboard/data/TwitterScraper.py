@@ -1,5 +1,4 @@
 from ntscraper import Nitter
-import signal
 
 class TwitterScraper:
 	# This will represent the one and only 'true' Twitter Connection 
@@ -31,8 +30,6 @@ class TwitterScraper:
 			TwitterScraper.scraper = Nitter()
 		while True:
 			print('IM IN THE LOOP!')
-			signal.signal(signal.SIGALRM, self.handler)
-			signal.alarm(300)
 			try:
 				search_results = TwitterScraper.scraper.get_tweets(query_string, mode='term', number=number_tweets, near=near, language='en')
 				print('search_results = ' + str(len(search_results['tweets'])))
