@@ -34,7 +34,7 @@ class TwitterScraper:
 			try:
 				with multiprocessing.Pool(1) as pool:
 					# search_results = TwitterScraper.scraper.get_tweets(query_string, mode='term', number=number_tweets, near=near, language='en')
-					result = pool.apply_async(TwitterScraper.scraper.get_tweets, args=(query_string), kwds={'mode': 'term', 'number': number_tweets, 'near': near, 'language': 'en'})
+					result = pool.apply_async(TwitterScraper.scraper.get_tweets, kwds={'term': query_string, 'mode': 'term', 'number': number_tweets, 'near': near, 'language': 'en'})
 					results_dict = result.get(300)
 					print('search_results = ' + str(len(search_results['tweets'])))
 					if len(search_results['tweets']) > 0:
