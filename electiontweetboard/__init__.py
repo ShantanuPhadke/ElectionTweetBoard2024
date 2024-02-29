@@ -78,7 +78,7 @@ def getLastProcessedPolitician():
 # Do / process one of the politicians at a time.
 # Rearchitecture (02/28/24):
 # Just keep it as simple as possible (like KISS on steroids)
-def masterUpdateMethod(politician):
+def masterUpdateMethod():
 	with app.app_context():
 		# Every hour lets say, do the following:
 		# (1) Getting the list of politicians
