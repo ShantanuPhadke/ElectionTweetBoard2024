@@ -125,10 +125,11 @@ politicians = [
 	'Ron DeSantis', 'Chris Christie'
 ]
 
-db_update_scheduler.add_job(func=masterUpdateMethod, args=[politicians[0]], trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod', id='masterUpdateMethod-' + politicians[0])
+db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
+# db_update_scheduler.add_job(func=masterUpdateMethod, args=[politicians[0]], trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod', id='masterUpdateMethod-' + politicians[0])
 # db_update_scheduler.add_job(func=masterGeographicSentimentAnalyzer,trigger="date", run_date=datetime.datetime.now(), name='masterGeographicSentimentAnalyzer', id='masterGeographicSentimentAnalyzer')
 # Start the next instance of the job once the current instance completes
-def my_listener_master_update(event):	
+'''def my_listener_master_update(event):	
 	if event.exception:
 		print('The job has crashed with exception = ' + str(event.exception))
 		db_update_scheduler.add_job(
@@ -171,8 +172,9 @@ def my_listener_master_geographic_sentiment_analyzer(event):
 				name='masterGeographicSentimentAnalyzer',
 				id='masterGeographicSentimentAnalyzer'
 			)
+'''
 
-db_update_scheduler.add_listener(my_listener_master_update, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
+# db_update_scheduler.add_listener(my_listener_master_update, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
 # db_update_scheduler.add_listener(my_listener_master_geographic_sentiment_analyzer, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
 # db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
 # Shut down the scheduler when exiting the app
