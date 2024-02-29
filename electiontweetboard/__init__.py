@@ -76,37 +76,39 @@ def getLastProcessedPolitician():
 
 # Rearchitecture (01/29/24):
 # Do / process one of the politicians at a time.
+# Rearchitecture (02/28/24):
+# Just keep it as simple as possible (like KISS on steroids)
 def masterUpdateMethod(politician):
 	with app.app_context():
 		# Every hour lets say, do the following:
 		# (1) Getting the list of politicians
-		# politicians = [
-		#	'Joe Biden', 'Marianne Williamson', 'Dean Phillips',
-		#	'Donald Trump', 'Nikki Haley', 'Vivek Ramaswamy', 'Asa Hutchinson',
-		#	'Ron DeSantis', 'Chris Christie'
-		# ]
+		politicians = [
+			'Joe Biden', 'Marianne Williamson', 'Dean Phillips',
+			'Donald Trump', 'Nikki Haley', 'Vivek Ramaswamy', 'Asa Hutchinson',
+			'Ron DeSantis', 'Chris Christie'
+		]
 
 		# last_politician_processed = getLastProcessedPolitician()
 		# last_politician_processed_index = (politicians.index(last_politician_processed) + 1) % len(politicians)
 
 		# (2) Looping through each one, querying the Twitter via Nitter. Store in an object.
-		# for politician in politicians:
-		my_sentiment_analyzer.setQueryTerm(politician)
-		politician_sentiment_data = {}
-		tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
-		politician_sentiment_data[politician] = []
-		for tweet in tweets:
-			try:
-				sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
-				# print('Politician = ' + politician + ', Tweet = ' + tweet['text'] + ', Sentiment = ' + sentiment)
-				politician_sentiment_data[politician].append({
-					'tweet': tweet['text'], 'sentiment': sentiment
-				})
-			except Exception as e:
-				print(e)
-				continue
+		for politician in politicians:
+			my_sentiment_analyzer.setQueryTerm(politician)
+			politician_sentiment_data = {}
+			tweets = my_twitter_scraper.getTweetsForQuery(politician, 100)
+			politician_sentiment_data[politician] = []
+			for tweet in tweets:
+				try:
+					sentiment = my_sentiment_analyzer.getSentimentForTweet(tweet['text'])
+					# print('Politician = ' + politician + ', Tweet = ' + tweet['text'] + ', Sentiment = ' + sentiment)
+					politician_sentiment_data[politician].append({
+						'tweet': tweet['text'], 'sentiment': sentiment
+					})
+				except Exception as e:
+					print(e)
+					continue
 		# (3) Keeping track of those tweets in our database, along with the derived sentiments. Process the
-		# object made above. 
+		# object made above.
 		# [01-16-24] Changed to only wiriting a single politician's data to the DB at one time to optimize for memory usage.
 		print('[DEBUG] BEFORE CALL TO loadAllSentimentDistributions for politician = ' + politician)
 		commands.loadAllSentimentDistributions(politician_sentiment_data)
