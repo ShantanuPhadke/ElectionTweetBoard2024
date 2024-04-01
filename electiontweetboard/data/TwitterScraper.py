@@ -28,11 +28,12 @@ class TwitterScraper:
 
 	def getTweetsForQuery(self, query_string, number_tweets, near=None):
 		if not TwitterScraper.scraper:
-			TwitterScraper.scraper = Nitter()
+			TwitterScraper.scraper = Nitter(log_level=1)
 		while True:
 			print('IM IN THE LOOP!')
 			try:
 				search_results = TwitterScraper.scraper.get_tweets(query_string, mode='term', number=number_tweets, near=near, language='en')
+				print('search_results = ' + str(search_results))
 				if len(search_results['tweets']) > 0:
 					break
 				else:

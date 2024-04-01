@@ -128,6 +128,7 @@ politicians = [
 ]
 
 db_update_scheduler.add_job(func=masterUpdateMethod, trigger="interval", seconds=7200)
+db_update_scheduler.add_job(func=masterUpdateMethod, trigger="date", run_date=datetime.datetime.now())
 # db_update_scheduler.add_job(func=masterUpdateMethod, args=[politicians[0]], trigger="date", run_date=datetime.datetime.now(), name='masterUpdateMethod', id='masterUpdateMethod-' + politicians[0])
 # db_update_scheduler.add_job(func=masterGeographicSentimentAnalyzer,trigger="date", run_date=datetime.datetime.now(), name='masterGeographicSentimentAnalyzer', id='masterGeographicSentimentAnalyzer')
 # Start the next instance of the job once the current instance completes
