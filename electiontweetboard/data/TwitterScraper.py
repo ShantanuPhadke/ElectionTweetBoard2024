@@ -32,13 +32,10 @@ class TwitterScraper:
 		while True:
 			try:
 				search_results = TwitterScraper.scraper.get_tweets(query_string, mode='term', number=number_tweets, near=near, language='en')
-				'''
-				print('search_results = ' + str(search_results))
 				if len(search_results['tweets']) > 0:
 					break
 				else:
 					continue
-				'''
 			except Exception as e:
 				print('\nException encountered in TwitterScraper!! e = ' + str(e) + '\n')
 				continue
