@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/css/main.110b8aa2.css",
-    "main.js": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/js/main.46bc5747.js",
-    "static/js/787.d5fa4d18.chunk.js": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/js/787.d5fa4d18.chunk.js",
-    "static/media/fontawesome-webfont.svg?v=4.7.0": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
-    "static/media/fontawesome-webfont.eot": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
-    "static/media/fontawesome-webfont.ttf?v=4.7.0": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
-    "static/media/fontawesome-webfont.woff?v=4.7.0": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
-    "static/media/fontawesome-webfont.woff2?v=4.7.0": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
-    "index.html": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/index.html",
-    "main.110b8aa2.css.map": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/css/main.110b8aa2.css.map",
-    "main.46bc5747.js.map": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/js/main.46bc5747.js.map",
-    "787.d5fa4d18.chunk.js.map": "/www.shantanuphadke.github.io/ElectionTweetBoard2024/static/js/787.d5fa4d18.chunk.js.map"
+    "main.css": "/www.electiontweetboard.com/static/css/main.5adc5f7f.css",
+    "main.js": "/www.electiontweetboard.com/static/js/main.c212a60c.js",
+    "static/js/787.d5fa4d18.chunk.js": "/www.electiontweetboard.com/static/js/787.d5fa4d18.chunk.js",
+    "static/media/fontawesome-webfont.svg?v=4.7.0": "/www.electiontweetboard.com/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
+    "static/media/fontawesome-webfont.eot": "/www.electiontweetboard.com/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
+    "static/media/fontawesome-webfont.ttf?v=4.7.0": "/www.electiontweetboard.com/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
+    "static/media/fontawesome-webfont.woff?v=4.7.0": "/www.electiontweetboard.com/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
+    "static/media/fontawesome-webfont.woff2?v=4.7.0": "/www.electiontweetboard.com/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
+    "index.html": "/www.electiontweetboard.com/index.html",
+    "main.5adc5f7f.css.map": "/www.electiontweetboard.com/static/css/main.5adc5f7f.css.map",
+    "main.c212a60c.js.map": "/www.electiontweetboard.com/static/js/main.c212a60c.js.map",
+    "787.d5fa4d18.chunk.js.map": "/www.electiontweetboard.com/static/js/787.d5fa4d18.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.110b8aa2.css",
-    "static/js/main.46bc5747.js"
+    "static/css/main.5adc5f7f.css",
+    "static/js/main.c212a60c.js"
   ]
 }
